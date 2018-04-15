@@ -1,0 +1,84 @@
+<!-- Borrowed from https://bl.ocks.org/mbostock/2206590 -->
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<style>
+
+path {
+
+  stroke: #fff;
+  stroke-width: .5;
+  stroke-dasharray: 1;
+  fill: #afafaf;
+  
+}
+
+#neighborhoodPopover { 
+  position: absolute;     
+  text-align: center;         
+  padding: 2px;       
+  font: 12px sans-serif;    
+  background: #fff; 
+  border: 0px;    
+  border-radius: 8px;     
+  pointer-events: none;
+  opacity: 0;     
+}
+</style>
+
+<body>
+  <svg width="960" height="720" viewBox="0 0 1594 1088"></svg>
+  <div id='neighborhoodPopover'> </div>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+<script>
+
+var svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height");
+
+<!-- borrowed from https://www1.nyc.gov/site/planning/data-maps/open-data.page http://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/nynta/FeatureServer/0/query?where=1=1&outFields=*&outSR=4326&f=geojson -->
+d3.json("nycgeojson2.geojson", function(error, nyc) {
+  if (error) throw error;
+
+  var path = d3.geoPath()
+      .projection(d3.geoConicConformal()
+      .parallels([33, 45])
+      .rotate([96, -39])
+      .fitSize([width, height], nyc));
+
+  svg.selectAll("path")
+      .data(nyc.features)
+      .enter().append("path")
+      .attr("d", path)
+      .on("mouseenter", function(d) {
+        console.log(d);
+      d3.select(this)
+      .style("stroke-width", 1.5)
+      .style("stroke-dasharray", 0)
+
+      d3.select("#neighborhoodPopover")
+      .transition()
+      .style("opacity", 1)
+      .style("left", (d3.event.pageX) + "px")
+      .style("top", (d3.event.pageY) + "px")
+      .text(d.properties.Name)
+
+    })
+    .on("mouseleave", function(d) { 
+      d3.select(this)
+      .style("stroke-width", .25)
+      .style("stroke-dasharray", 1)
+
+      d3.select("#cneighborhoodPopoverountyText")
+      .transition()
+      .style("opacity", 0);
+    });
+
+    console.log(nyc);
+	});
+ 
+
+</script>
+</body>
+
