@@ -1,3 +1,4 @@
+<!-- Borrowed from https://bl.ocks.org/mbostock/2206590 -->
 <!DOCTYPE html>
 <meta charset="utf-8">
 
@@ -23,11 +24,10 @@ path {
   pointer-events: none;
   opacity: 0;     
 }
-
 </style>
 
 <body>
-  <svg width="960" height="720"></svg>
+  <svg width="960" height="720" viewBox="0 0 1594 1088"></svg>
   <div id='neighborhoodPopover'> </div>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v1.min.js"></script>
@@ -37,7 +37,7 @@ var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
 
-// http://data.beta.nyc//dataset/0ff93d2d-90ba-457c-9f7e-39e47bf2ac5f/resource/35dd04fb-81b3-479b-a074-a27a37888ce7/download/d085e2f8d0b54d4590b1e7d1f35594c1pediacitiesnycneighborhoods.geojson
+<!-- borrowed from https://www1.nyc.gov/site/planning/data-maps/open-data.page http://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/nynta/FeatureServer/0/query?where=1=1&outFields=*&outSR=4326&f=geojson -->
 d3.json("nyc.geojson", function(error, nyc) {
   if (error) throw error;
 
@@ -62,7 +62,7 @@ d3.json("nyc.geojson", function(error, nyc) {
       .style("opacity", 1)
       .style("left", (d3.event.pageX) + "px")
       .style("top", (d3.event.pageY) + "px")
-      .text(d.properties.neighborhood)
+      .text(d.properties.Name)
 
     })
     .on("mouseleave", function(d) { 
@@ -76,7 +76,9 @@ d3.json("nyc.geojson", function(error, nyc) {
     });
 
     console.log(nyc);
-});
+	});
+ 
 
 </script>
 </body>
+
