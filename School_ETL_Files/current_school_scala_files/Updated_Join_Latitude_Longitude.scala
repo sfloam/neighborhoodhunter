@@ -58,3 +58,15 @@ val dfcrddschema = StructType(
 
 val df_school = sqlContext.createDataFrame(dfrdddone,dfcrddschema)
 
+df_school.rdd.zipWithIndex.map(tup => "{\"type\":\"Feature\","+
+    "\"id\":"+ tup._2.toString + ","+
+    "\"properties\": {"+
+    "\"DBN\":"+ "\""+tup._1(0).toString+"\""+ "," +
+    "\"Weight_2015\":" + "\""+ tup._1(1).toString + "\"," +
+    "\"Weight_2016\":"+ tup._1(2).toString + "," +
+    "\"Weight_2017\":"+ tup._1(3).toString + "," +
+    "\"Variance\":"+ tup._1(4).toString + "," +
+    "\"Latitude\":"+ tup._1(5).toString + "," +
+    "\"Longitude\":"+ tup._1(6).toString + "}," +
+    "\"geometry\": {\"type\":\"Point\", \"coordinates\":"+tup._1(7) +"}},")
+
