@@ -1,0 +1,6 @@
+val test = spark.read.option("multiLine", true).json("BDAD/nyc.geojson")
+val features = test.select(explode($"features")).toDF("Features")
+val properties  = features.select("Features.properties")
+var neighborhood  = properties.select("properties.neighborhood")
+neighborhood  = neighborhood.dropDuplicates()
+neighborhood.write.format("csv").save("BDAD/Neighbourhoods")
