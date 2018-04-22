@@ -64,6 +64,7 @@
     var geoPath = d3.geoPath()
         .projection( albersProjection );
 
+    //color neighborhood grey
     g.selectAll( "path" )
     .data( neighborhoods_json.features )
     .enter()
@@ -75,12 +76,14 @@
     //highlights on hover
     .on("mouseenter", function(d) {
 
+        //color neighborhood green when hover over
         console.log(d);
         d3.select(this)
         .style("stroke-width", 1.5)
         .style("stroke-dasharray", 0)
         .style("fill","green")
 
+        //label neighborhood on hover
         d3.select("#neighborhoodPopover")
         .transition()
         .style("opacity", .8)
@@ -119,17 +122,37 @@
     	.attr( "fill", "#900" )
     	.attr( "stroke", "#999" )
     	.attr( "d", geoPath )
-	.on("click", function(g) {
-            d3.select("#dataTag")
-	    .transition()
-            .style("opacity", .8)
-	    .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY) + "px")
-	    .text("DBN:" + g.properties.DBN +
-		     "\n" + "Variance:" + g.properties.Variance +
-		     "\n" + "Weight_2017:" + g.properties.Weight_2017)
-        // }
-	});
+	    .on("mouseover", function(d) {
+             //recolor when wave mouse over points that have variance less than zero
+             if(d.properties.Variance <0){
+                 d3.select(this)
+                 .attr("fill","#3FCCFF")
+                 // if (d.properties.DBN == "29Q1945"){
+                 //     g.select("path").style("fill","red")
+                 // }
+             }
+	})
+    //when you move your mouse away from label of point, label disappears
+    .on("mouseleave",function(d){
+        d3.select("#dataTag")
+          .transition()
+          .style("opacity", 0)
+        d3.select(this)
+            .attr("fill","#900")
+            .attr( "stroke", "#999" )
+        // console.log(d3.select("path"))
+    })
+    .on("click",function(d){
+        //give name tag to points
+        d3.select("#dataTag")
+          .transition()
+          .style("opacity", .8)
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY) + "px")
+          .text("DBN:" + d.properties.DBN +
+         "\n" + "Variance:" + d.properties.Variance +
+         "\n" + "Weight_2017:" + d.properties.Weight_2017)
+    });
 	</script>
 </body>
 </html>
