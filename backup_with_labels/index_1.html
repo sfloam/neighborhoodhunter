@@ -16,25 +16,13 @@
       pointer-events: none;
       opacity: 0;
     }
-
-    #dataTag{
-      position:absolute;
-      text-align: center;
-      padding: 2px;
-      font: 12px sans-serif;
-      background: #fff;
-      border: 0px;
-      border-radius: 8px;
-      pointer-events: none;
-      opacity: 0;
-    }
     </style>
 	<title>Mapping with D3</title>
 	<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <script src="nyc.geojson"></script>
     <script src="sd.geojson"></script>
     <div id='neighborhoodPopover'> </div>
-    <div id='dataTag'></div>
+
 </head>
 <body>
 	<!-- Page elements and content go here. -->
@@ -118,18 +106,8 @@
     	.append( "path" )
     	.attr( "fill", "#900" )
     	.attr( "stroke", "#999" )
-    	.attr( "d", geoPath )
-	.on("click", function(g) {
-            d3.select("#dataTag")
-	    .transition()
-            .style("opacity", .8)
-	    .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY) + "px")
-	    .text("DBN:" + g.properties.DBN +
-		     "\n" + "Variance:" + g.properties.Variance +
-		     "\n" + "Weight_2017:" + g.properties.Weight_2017)
-        // }
-	});
+    	.attr( "d", geoPath );
+
 	</script>
 </body>
 </html>
