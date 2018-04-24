@@ -1,7 +1,7 @@
-Read Me
+#Neighborhoods
 
-To Generate School Data in Spark:
-	1. On DUMBO HPC:
+##To Generate School Data in Spark:
+	###1. On DUMBO HPC:
 		A. Load school data into HDFS
 			SCHOOL_LOCATIONS_2014_2015_JSON.json
 			SCHOOL_LOCATIONS_2015_2016_JSON.json
@@ -16,13 +16,13 @@ To Generate School Data in Spark:
 		B. Modify HDFS paths in School_Locations.scala, Updated_EMS_HS.scala, Updated_Join_Latitude_Longitude.scala
 
 		C. Enter into command line
-			module load spark
+			```module load spark
 			spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
 			load: School_Locations.scala
 			load: Updated_EMS_HS.scala
-			load: Updated_Join_Latitude_Longitude.scala
+			load: Updated_Join_Latitude_Longitude.scala```
 
-To Generate Crime Data in Spark:
+##To Generate Crime Data in Spark:
 		A. Load crime data into HDFS
 			resources/crime/RawData/misdemeanor-offenses-by-precinct-2000-2017.csv
 			resources/crime/RawData/non-seven-major-felony-offenses-by-precinct-2000-2017.csv
@@ -32,16 +32,16 @@ To Generate Crime Data in Spark:
 		B. Modify HDFS paths in src/crime/CrimeDataETL.scala
 
 		C. Enter into command line
-			module load spark
+			```module load spark
 			spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
-			load: CrimeDataETL.scala
+			load: CrimeDataETL.scala```
 
-To view map of data follow these steps:
+##To view map of data follow these steps:
 	1. In your command line:
 		A. python -m SimpleHTTPServer
 		B. open index
 
-To interact with the map:
+##To interact with the map:
 	1. Hover over a neighborhood to view the name of that neighborhood
 	2. Click on a datapoint to view information about that data point
 		A. Currently the map is set up to display school locations in NYC. This will be converted into data relating to our model.
@@ -49,7 +49,7 @@ To interact with the map:
 		C. This demonstration is meant to show a mock up of the functionality we plan to implement in our application
 
 
-Recent Updates
+##Recent Updates
 	1. School Data now accounts for variance and generates GPS locations of each school
 	2. Crime data is updated with variance and sorted based on variance values
 	3. School Data now can generate geojson code used for plotting information
