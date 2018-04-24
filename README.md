@@ -38,6 +38,29 @@ load: Updated_Join_Latitude_Longitude.scala
 spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
 load: CrimeDataETL.scala
 ```
+## To Generate Housing Data in Spark:
+##### A. Load housing data into HDFS
+- /user/sc2936/housingSalesRaw/rollingsales_bronx.csv
+- /user/sc2936/housingSalesRaw/rollingsales_brooklyn.csv
+- /user/sc2936/housingSalesRaw/rollingsales_manhattan.csv
+- /user/sc2936/housingSalesRaw/rollingsales_queens.csv
+- /user/sc2936/housingSalesRaw/rollingsales_statenisland.csv
+
+These last five folders for "borough"_sales_prices each contain seperate files of data per year 2005-2016
+- /user/sc2936/housingSalesRaw/bronx_sales_prices
+- /user/sc2936/housingSalesRaw/brooklyn_sales_prices
+- /user/sc2936/housingSalesRaw/manhattan_sales_prices
+- /user/sc2936/housingSalesRaw/queens_sales_prices
+- /user/sc2936/housingSalesRaw/staten_island_sales_prices
+
+##### B. Modify HDFS paths in src/housing/Recent-And-2017-Sales.scala
+##### B. Modify HDFS paths in src/housing/Historical-Housing.scala
+
+##### C. Enter into command line
+```module load spark
+spark-shell --packages com.databricks:spark-csv_2.10:1.5.0 
+```
+
 ## To view map of data follow these steps:
 1. In your command line:
 - A. python -m SimpleHTTPServer
