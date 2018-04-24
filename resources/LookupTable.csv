@@ -207,60 +207,60 @@ Gramercy,-73.98137594833548 40.737209832715045,Manhattan,13,-73.98137595,40.7372
 Tottenville,-74.24656934235291 40.505333761156464,Staten Island,123,-74.24656934,40.50533376
 Fort Wadsworth,-74.05883 40.60105,Staten Island,120,-74.05883,40.60105
 Crotona Park,-73.895220 40.839123,Bronx,48,-73.895220,40.839123
-Allerton,,Bronx,49,,
-South Slope,,Brooklyn,72,,
-Ditmars Steinway,,Queens,114,,
-Liberty Island,,Manhattan,1,,
-Prospect Park,,Brooklyn,70,,
-Downtown Brooklyn,,Brooklyn,84,,
-Green-Wood Cemetery,,Brooklyn,72,,
-Tremont,,Bronx,48,,
-Hell's Kitchen,,Manhattan,18,,
-"Chelsea, Staten Island",,Staten Island,121,,
-Van Cortlandt Park,,Bronx,50,,
-Central Park,,Manhattan,22,,
-Harlem,,Manhattan,28,,
-Bull's Head,,Staten Island,121,,
-"Bay Terrace, Staten Island",,Staten Island,122,,
-John F. Kennedy International Airport,,Queens,105,,
-Rikers Island,,Bronx,114,,
-Bedford-Stuyvesant,,Brooklyn,79,,
-Ferry Point Park,,Bronx,45,,
-Kips Bay,,Manhattan,13,,
-Rockaway Beach,,Queens,100,,
-Jamaica Bay,,Queens,100,,
-Hart Island,,Bronx,45,,
-Governors Island,,Manhattan,1,,
-Richmondtown,,Staten Island,121,,
-Pelham Bay Park,,Bronx,45,,
-Pelham Islands,,Bronx,45,,
-Freshkills Park,,Staten Island,121,,
-Latourette Park,,Staten Island,122,,
-Prospect-Lefferts Gardens,,Brooklyn,71,,
-Randall's Island,,Manhattan,23,,
-Hoffman Island,,Staten Island,122,,
-Plum Beach,,Brooklyn,61,,
-Mariners Harbor,,Staten Island,121,,
-Flushing Meadows Corona Park,,Queens,110,,
-South Brother Island,,Bronx,114,,
-Two Bridges,,Manhattan,7,,
-Flushing,,Queens,109,,
-Great Kills Park,,Staten Island,122,,
-Floyd Bennett Field,,Brooklyn,63,,
-Nolita,,Manhattan,5,,
-Flatiron District,,Manhattan,13,,
-Bayswater,,Queens,101,,
-Bronxdale,,Bronx,49,,
-East Morrisania,,Bronx,42,,
-LaGuardia Airport,,Queens,115,,
-Forest Park,,Queens,104,,
-Bronx Park,,Bronx,52,,
-Highbridge,,Bronx,44,,
-Hollis Hills,,Queens,111,,
-Theater District,,Manhattan,18,,
-Columbia St,,Brooklyn,76,,
-Cunningham Park,,Queens,107,,
-Corona,,Queens,110,,
-Jamaica,,Queens,103,,
-Ellis Island,,Manhattan,1,,
-Alley Pond Park,,Queens,111,,
+Allerton,-73.8633698 40.8632382,Bronx,49,-73.8633698,40.8632382
+South Slope,-73.9869594 40.6604651,Brooklyn,72,-73.9869594,40.6604651
+Ditmars Steinway,-73.9120181 40.7770046,Queens,114,-73.9120181,40.7770046
+Liberty Island,-74.0450308 40.6899373,Manhattan,1,-74.0450308,40.6899373
+Prospect Park,-73.9700734 40.6599492,Brooklyn,70,-73.9700734,40.6599492
+Downtown Brooklyn,-73.9844005 40.6936871,Brooklyn,84,-73.9844005,40.6936871
+Green-Wood Cemetery,-73.990977 40.652717,Brooklyn,72,-73.990977,40.652717
+Tremont,-73.892898 40.846494,Bronx,48,-73.892898,40.846494
+Hell's Kitchen,-73.993294 40.762656,Manhattan,18,-73.993294,40.762656
+"Chelsea, Staten Island",-74.191253 40.591205,Staten Island,121,-74.191253,40.591205
+Van Cortlandt Park,-73.886433 40.895941,Bronx,50,-73.886433,40.895941
+Central Park,-73.966146 40.781923,Manhattan,22,-73.966146,40.781923
+Harlem,-73.946459 40.817179,Manhattan,28,-73.946459,40.817179
+Bull's Head,-74.163396 40.611161,Staten Island,121,-74.163396,40.611161
+"Bay Terrace, Staten Island",-74.135099 40.555995,Staten Island,122,-74.135099,40.555995
+John F. Kennedy International Airport,-73.782959 40.649418,Queens,105,-73.782959,40.649418
+Rikers Island,-73.882686 40.790818,Bronx,114,-73.882686,40.790818
+Bedford-Stuyvesant,-73.939785 40.686316,Brooklyn,79,-73.939785,40.686316
+Ferry Point Park,-73.830680 40.817470,Bronx,45,-73.830680,40.817470
+Kips Bay,-73.977838 40.741199,Manhattan,13,-73.977838,40.741199
+Rockaway Beach,-73.812014 40.586822,Queens,100,-73.812014,40.586822
+Jamaica Bay,-73.869727 40.605117,Queens,100,-73.869727,40.605117
+Hart Island,-73.770424 40.853301,Bronx,45,-73.770424,40.853301
+Governors Island,-74.019246 40.688779,Manhattan,1,-74.019246,40.688779
+Richmondtown,-74.134809 40.568151,Staten Island,121,-74.134809,40.568151
+Pelham Bay Park,-73.820955 40.854279,Bronx,45,-73.820955,40.854279
+Pelham Islands,-73.770212 40.883355,Bronx,45,-73.770212,40.883355
+Freshkills Park,-74.185717 40.575846,Staten Island,121,-74.185717,40.575846
+Latourette Park,-74.140518 40.582472,Staten Island,122,-74.140518,40.582472
+Prospect-Lefferts Gardens,-73.954481 40.659094,Brooklyn,71,-73.954481,40.659094
+Randall's Island,-73.924120 40.790304,Manhattan,23,-73.924120,40.790304
+Hoffman Island,-74.053896 40.578837,Staten Island,122,-74.053896,40.578837
+Plum Beach,-73.920876 40.583691,Brooklyn,61,-73.920876,40.583691
+Mariners Harbor,-74.156253 40.632418,Staten Island,121,-74.156253,40.632418
+Flushing Meadows Corona Park,-73.841400 40.740075,Queens,110,-73.841400,40.740075
+South Brother Island,-73.897846 40.796330,Bronx,114,-73.897846,40.796330
+Two Bridges,-73.991902 40.711693,Manhattan,7,-73.991902,40.711693
+Flushing,-73.830931 40.765194,Queens,109,-73.830931,40.765194
+Great Kills Park,-74.126067 40.549666,Staten Island,122,-74.126067,40.549666
+Floyd Bennett Field,-73.893031 40.593099,Brooklyn,63,-73.893031,40.593099
+Nolita,-73.995172 40.722469,Manhattan,5,-73.995172,40.722469
+Flatiron District,-73.988746 40.741498,Manhattan,13,-73.988746,40.741498
+Bayswater,-73.765269 40.607374,Queens,101,-73.765269,40.607374
+Bronxdale,-73.866610 40.851434,Bronx,49,-73.866610,40.851434
+East Morrisania,-73.905555 40.827566,Bronx,42,-73.905555,40.827566
+LaGuardia Airport,-73.874535 40.776706,Queens,115,-73.874535,40.776706
+Forest Park,-73.850976 40.701455,Queens,104,-73.850976,40.701455
+Bronx Park,-73.876373 40.855800,Bronx,52,-73.876373,40.855800
+Highbridge,-73.927435 40.837188,Bronx,44,-73.927435,40.837188
+Hollis Hills,-73.754783 40.732819,Queens,111,-73.754783,40.732819
+Theater District,-73.985721 40.760089,Manhattan,18,-73.985721,40.760089
+Columbia St,-74.002954 40.686919,Brooklyn,76,-74.002954,40.686919
+Cunningham Park,-73.767782 40.733555,Queens,107,-73.767782,40.733555
+Corona,-73.858600 40.741391,Queens,110,-73.858600,40.741391
+Jamaica,-73.790287 40.698763,Queens,103,-73.790287,40.698763
+Ellis Island,-74.040727 40.698702,Manhattan,1,-74.040727,40.698702
+Alley Pond Park,-73.740794 40.744056,Queens,111,-73.740794,40.744056
