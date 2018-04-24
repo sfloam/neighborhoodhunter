@@ -44,7 +44,7 @@ val dfrdddone = dfcrdd.map(line => org.apache.spark.sql.Row(
         "["+line(4).toString+","+line(5).toString+"]"))
 
 
-val dfcrddschema = StructType(
+val dfcrdd1schema = StructType(
         StructField("DBN",StringType,true)::
         StructField("Weight_2015",DoubleType,true)::
         StructField("Weight_2016",DoubleType,true)::
@@ -56,7 +56,53 @@ val dfcrddschema = StructType(
         Nil)
     
 
-val df_school = sqlContext.createDataFrame(dfrdddone,dfcrddschema)
+
+val df_school_no_neighs = sqlContext.createDataFrame(dfrdddone,dfcrdd1schema)
+
+
+val df_neighborhood_centroids = sqlContext.read.format("csv").option("header", "true").load("hdfs:///user/smf463/geodata/LookupTable.csv")
+
+val df_neighborhood_centroids_casted = df_neighborhood_centroids.selectExpr("Name",
+    "Long_Lat",
+    "Borough",
+    "Precinct",
+    "cast(Longitude as double) Longitude",
+    "cast(Latitude as double) Latitude")
+
+val lookups = df_neighborhood_centroids_casted.rdd.collect
+
+def getNeighborhood(latitude:Double,longitude:Double,lookups:Array[org.apache.spark.sql.Row] ):String = {
+    var minDist = Double.MaxValue
+    var minDistNeighborhood = "Not Found"
+    for (arr <- lookups) {
+        val lat = arr(5).toString.toDouble - latitude
+        val lon = math.abs(arr(4).toString.toDouble) - math.abs(longitude)
+        val d =  math.sqrt(math.pow(lat,2) + math.pow(lon,2))
+
+        if (minDist>d){
+            minDist = d
+            minDistNeighborhood = arr(0).toString
+            //println(minDistNeighborhood,d)
+        }
+    }
+    return(minDistNeighborhood)
+}
+
+val df_school_neighs = df_school_no_neighs.rdd.map(line=> org.apache.spark.sql.Row(line(0),line(1),line(2),line(3),line(4),line(5),line(6),line(7),getNeighborhood(line(5).toString.toDouble,line(6).toString.toDouble,lookups)))
+
+val dfcrddschema = StructType(
+        StructField("DBN",StringType,true)::
+        StructField("Weight_2015",DoubleType,true)::
+        StructField("Weight_2016",DoubleType,true)::
+        StructField("Weight_2017",DoubleType,true)::
+        StructField("Variance",DoubleType,true)::
+        StructField("Latitude",DoubleType,true)::
+        StructField("Longitude",DoubleType,true)::
+        StructField("Coordinates",StringType,true)::
+        StructField("Neighborhood",StringType,true)::
+        Nil)
+
+val df_school = sqlContext.createDataFrame(df_school_neighs,dfcrddschema)
 
 df_school.rdd.zipWithIndex.map(tup => "{\"type\":\"Feature\","+
     "\"id\":"+ tup._2.toString + ","+
@@ -67,6 +113,7 @@ df_school.rdd.zipWithIndex.map(tup => "{\"type\":\"Feature\","+
     "\"Weight_2017\":"+ tup._1(3).toString + "," +
     "\"Variance\":"+ tup._1(4).toString + "," +
     "\"Latitude\":"+ tup._1(5).toString + "," +
-    "\"Longitude\":"+ tup._1(6).toString + "}," +
+    "\"Longitude\":"+ tup._1(6).toString + "," +
+    "\"Neighborhood\":"+ tup._1(8).toString + "}," +
     "\"geometry\": {\"type\":\"Point\", \"coordinates\":"+tup._1(7) +"}},")
 
