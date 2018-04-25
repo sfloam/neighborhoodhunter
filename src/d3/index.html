@@ -37,8 +37,14 @@
     <div id='dataTag'></div>
 </head>
 <body>
+	<form name="myform" onSubmit="return handleClick()">
+            <input name="Budget"  type="submit" value="Enter" >
+            <input type="text" id="budget" placeholder="Enter Budget&hellip;">
+        </form>
+
 	<!-- Page elements and content go here. -->
 	<script>
+
     // Width and Height of the whole visualization
     var width = 960;
     var height = 720;
