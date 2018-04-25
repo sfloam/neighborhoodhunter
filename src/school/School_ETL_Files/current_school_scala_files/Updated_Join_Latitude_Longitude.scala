@@ -41,7 +41,7 @@ val dfrdddone = dfcrdd.map(line => org.apache.spark.sql.Row(
         ((line(3).toString.toDouble - ((line(1).toString.toDouble + line(2).toString.toDouble)/2))/ line(3).toString.toDouble),//var
         line(4),
         line(5),
-        "["+line(4).toString+","+line(5).toString+"]"))
+        "["+line(5).toString+","+line(4).toString+"]"))
 
 
 val dfcrdd1schema = StructType(
@@ -114,6 +114,6 @@ df_school.rdd.zipWithIndex.map(tup => "{\"type\":\"Feature\","+
     "\"Variance\":"+ tup._1(4).toString + "," +
     "\"Latitude\":"+ tup._1(5).toString + "," +
     "\"Longitude\":"+ tup._1(6).toString + "," +
-    "\"Neighborhood\":"+ tup._1(8).toString + "}," +
+    "\"Neighborhood\":"+ "\""+ tup._1(8).toString +"\"" + "}," +
     "\"geometry\": {\"type\":\"Point\", \"coordinates\":"+tup._1(7) +"}},")
 
