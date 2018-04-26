@@ -60,6 +60,7 @@ df4.show
 
 // Load lookup table to map precinct with neighbourhoods
 var df5 = sqlContext.read.format("csv").option("header", "true").load("BDAD/LookupTable.csv")
+
 //Remove unnecessary columns
 //df5 = df5.drop("OBJECTID", "the_geom", "AnnoLine1", "Stacked", "AnnoLine2", "AnnoLine3", "AnnoAngle")
 df5 = df5.select(
