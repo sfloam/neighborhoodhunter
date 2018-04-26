@@ -106,14 +106,15 @@ val df_school_novar = sqlContext.createDataFrame(df_school_neighs,dfcrddschema)
 
 val df_school_novar_agg = df_school_novar.groupBy("Neighborhood").agg(avg("Weight_2015").alias("Weight_2015"),avg("Weight_2016").alias("Weight_2016"),avg("Weight_2017").alias("Weight_2017"))
 
-val df_school_var = df_school_novar_agg.rdd.map(line=> org.apache.spark.sql.Row(line(0),line(1),line(2),line(3),((line(3).toString.toDouble - ((line(1).toString.toDouble + line(2).toString.toDouble)/2))/ line(3).toString.toDouble)))
+val df_school_var = df_school_novar_agg.rdd.map(line=> org.apache.spark.sql.Row(line(0),line(1),line(2),line(3),((line(3).toString.toDouble - ((line(1).toString.toDouble + line(2).toString.toDouble)/2))/ line(3).toString.toDouble),((line(2).toString.toDouble - line(1).toString.toDouble)/(line(2).toString.toDouble))))
 
 val dfcrddschema2 = StructType(
         StructField("Neighborhood",StringType,true)::
         StructField("Weight_2015",DoubleType,true)::
         StructField("Weight_2016",DoubleType,true)::
         StructField("Weight_2017",DoubleType,true)::
-        StructField("Variance",DoubleType,true)::Nil)
+        StructField("Variance",DoubleType,true)::
+        StructField("Variance_prediction",DoubleType,true)::Nil)
 
 val df_school = sqlContext.createDataFrame(df_school_var,dfcrddschema2)
 
