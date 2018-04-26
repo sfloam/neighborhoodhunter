@@ -19,9 +19,9 @@
 ##### C. Enter into command line
 ```module load spark
 spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
-load: School_Locations.scala
-load: Updated_EMS_HS.scala
-load: Updated_Join_Latitude_Longitude.scala
+:load School_Locations.scala
+:load Updated_EMS_HS.scala
+:load Updated_Join_Latitude_Longitude.scala
 ```
 
 ## To Generate Crime Data in Spark:
@@ -36,7 +36,7 @@ load: Updated_Join_Latitude_Longitude.scala
 ##### C. Enter into command line
 ```module load spark
 spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
-load: CrimeDataETL.scala
+:load CrimeDataETL.scala
 ```
 ## To Generate Housing Data in Spark:
 ##### A. Load housing data into HDFS
