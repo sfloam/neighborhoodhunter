@@ -28,6 +28,12 @@
       pointer-events: none;
       opacity: 0;
     }
+    #budgetPrice{
+	position:block;
+	top:10px;
+	left:10px;
+
+}
     </style>
 	<title>Mapping with D3</title>
 	<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
@@ -37,14 +43,122 @@
     <div id='dataTag'></div>
 </head>
 <body>
-	<form name="myform" onSubmit="return handleClick()">
-            <input name="Budget"  type="submit" value="Enter" >
+	<!-- <form name="budgetForm" onSubmit="return handleClick()">
+            <input name="budget"  type="submit" value="Enter" >
             <input type="text" id="budget" placeholder="Enter Budget&hellip;">
-        </form>
+    </form> -->
+    <select id="budgetPrice" onSubmit="return handleClick()">
+		<option value="100000" selected="selected">$100000</option>
+		<option value="200000">$200000</option>
+		<option value="300000">$300000</option>
+        <option value="400000">$400000</option>
+		<option value="500000">$500000</option>
+        <option value="600000">$600000</option>
+        <option value="700000">$700000</option>
+        <option value="800000">$800000</option>
+        <option value="900000">$900000</option>
+    </select>
+
+
+    <select id="homeType" onSubmit="return handleClick()">
+		<option value="One_Family" selected="selected">One Family</option>
+		<option value="Two_Family">Two Family</option>
+		<option value="Three_Family">Three Family</option>
+    </select>
 
 	<!-- Page elements and content go here. -->
 	<script>
+    var budget = 0
 
+    //Adapted from http://bl.ocks.org/d3noob/6bd13f974d6516f3e491
+    d3.select('#budgetPrice')
+    			.on("change", function () {
+    				var sect = document.getElementById("budgetPrice");
+    				var budget = sect.options[sect.selectedIndex].value;
+
+                var g = svg.append( "g" );
+
+                var albersProjection = d3.geoAlbers()
+                    .scale( 90500 )
+                    .rotate( [71.057,0] )
+                    .center( [-3, 40.711] )
+                    .translate( [width/2,height/2] );
+
+                // Create GeoPath function that uses built-in D3 functionality to turn
+                // lat/lon coordinates into screen coordinates
+                var geoPath = d3.geoPath()
+                    .projection( albersProjection );
+
+                //color neighborhood grey
+                g.selectAll( "path" )
+                .data( neighborhoods_json.features )
+                .enter()
+                .append( "path" )
+                .attr( "fill", function(d){
+                    console.log(d)
+                    if (d.One_Family.Rank > 3 && d.One_Family.Average_Price_Lower < budget){
+                        d3.select(this)
+                        .style("fill","red")
+                    }
+                    else{
+                        d3.select(this)
+                        .style("fill","#ccc")
+                    }
+
+                } )
+                .attr( "stroke", "#333")
+                .attr( "d", geoPath )
+
+
+                //highlights on hover
+                .on("mouseenter", function(d) {
+                    //color neighborhood green when hover over
+                    console.log(d);
+                    d3.select(this)
+                    .style("stroke-width", 1.5)
+                    .style("stroke-dasharray", 0)
+                    .style("fill","green")
+
+                    //label neighborhood on hover
+                    d3.select("#neighborhoodPopover")
+                    .transition()
+                    .style("opacity", .8)
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY) + "px")
+                    .text(d.properties.neighborhood + "RANK" + d.One_Family.Rank)
+
+
+                })
+
+                //removes highlights
+                .on("mouseleave", function(d) {
+                    // // if (d.properties.neighborhood="Tribeca"){
+                    // //     d3.select(this)
+                    // //     .style("stroke-width", .25)
+                    // //     .style("stroke-dasharray", 1)
+                    // //     .style("fill","r")
+                    // // }
+                    // else{
+                    if (d.One_Family.Rank > 4){
+                        d3.select(this)
+                        .style("fill","red")
+                    }
+                    else{
+                        d3.select(this)
+                        .style("fill","#ccc")
+                    }
+                    // }
+
+
+                    d3.select("#neighborhoodPopover")
+                    .transition()
+                    .style("opacity", 0)
+                })
+                ;
+
+
+            })
+    console.log(budget)
     // Width and Height of the whole visualization
     var width = 960;
     var height = 720;
@@ -75,13 +189,24 @@
     .data( neighborhoods_json.features )
     .enter()
     .append( "path" )
-    .attr( "fill", "#ccc" )
+    .attr( "fill", function(d){
+        console.log(d)
+        if (d.One_Family.Rank > 0 && d.One_Family.Average_Price_Lower < budget){
+            d3.select(this)
+            .style("fill","red")
+        }
+        else{
+            d3.select(this)
+            .style("fill","#ccc")
+        }
+
+    } )
     .attr( "stroke", "#333")
     .attr( "d", geoPath )
 
+
     //highlights on hover
     .on("mouseenter", function(d) {
-
         //color neighborhood green when hover over
         console.log(d);
         d3.select(this)
@@ -95,7 +220,9 @@
         .style("opacity", .8)
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY) + "px")
-        .text(d.properties.neighborhood)
+        .text(d.properties.neighborhood + "RANK" + d.One_Family.Rank)
+
+
     })
 
     //removes highlights
@@ -107,10 +234,14 @@
         // //     .style("fill","r")
         // // }
         // else{
+        if (d.One_Family.Rank > 4){
             d3.select(this)
-            .style("stroke-width", 1)
-            .style("stroke-color", 1)
+            .style("fill","red")
+        }
+        else{
+            d3.select(this)
             .style("fill","#ccc")
+        }
         // }
 
 
@@ -120,46 +251,46 @@
     })
     ;
 
-    var school_data = svg.append( "g" );
-    school_data.selectAll( "path" )
-    	.data(school_data_json.features)
-    	.enter()
-    	.append( "path" )
-    	.attr( "fill", "#900" )
-    	.attr( "stroke", "#999" )
-    	.attr( "d", geoPath )
-	    .on("mouseover", function(d) {
-             //recolor when wave mouse over points that have variance less than zero
-             if(d.properties.Variance <0){
-                 d3.select(this)
-                 .attr("fill","#3FCCFF")
-                 // if (d.properties.DBN == "29Q1945"){
-                 //     g.select("path").style("fill","red")
-                 // }
-             }
-	})
-    //when you move your mouse away from label of point, label disappears
-    .on("mouseleave",function(d){
-        d3.select("#dataTag")
-          .transition()
-          .style("opacity", 0)
-        d3.select(this)
-            .attr("fill","#900")
-            .attr( "stroke", "#999" )
-        // console.log(d3.select("path"))
-    })
-    .on("click",function(d){
-        //give name tag to points
-        d3.select("#dataTag")
-          .transition()
-          .style("opacity", .8)
-          .style("left", (d3.event.pageX) + "px")
-          .style("top", (d3.event.pageY) + "px")
-          .text("DBN:" + d.properties.DBN +
-         "\n" + "Variance:" + d.properties.Variance +
-         "\n" + "Weight_2017:" + d.properties.Weight_2017+
-         "\n" + "Neighborhood:" + d.properties.Neighborhood)
-    });
+    // var school_data = svg.append( "g" );
+    // school_data.selectAll( "path" )
+    // 	.data(school_data_json.features)
+    // 	.enter()
+    // 	.append( "path" )
+    // 	.attr( "fill", "#900" )
+    // 	.attr( "stroke", "#999" )
+    // 	.attr( "d", geoPath )
+	//     .on("mouseover", function(d) {
+    //          //recolor when wave mouse over points that have variance less than zero
+    //          if(d.properties.Variance <0){
+    //              d3.select(this)
+    //              .attr("fill","#3FCCFF")
+    //              // if (d.properties.DBN == "29Q1945"){
+    //              //     g.select("path").style("fill","red")
+    //              // }
+    //          }
+	// })
+    // //when you move your mouse away from label of point, label disappears
+    // .on("mouseleave",function(d){
+    //     d3.select("#dataTag")
+    //       .transition()
+    //       .style("opacity", 0)
+    //     d3.select(this)
+    //         .attr("fill","#900")
+    //         .attr( "stroke", "#999" )
+    //     // console.log(d3.select("path"))
+    // })
+    // .on("click",function(d){
+    //     //give name tag to points
+    //     d3.select("#dataTag")
+    //       .transition()
+    //       .style("opacity", .8)
+    //       .style("left", (d3.event.pageX) + "px")
+    //       .style("top", (d3.event.pageY) + "px")
+    //       .text("DBN:" + d.properties.DBN +
+    //      "\n" + "Variance:" + d.properties.Variance +
+    //      "\n" + "Weight_2017:" + d.properties.Weight_2017+
+    //      "\n" + "Neighborhood:" + d.properties.Neighborhood)
+    // });
 	</script>
 </body>
 </html>
