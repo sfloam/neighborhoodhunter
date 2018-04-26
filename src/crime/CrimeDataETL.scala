@@ -25,7 +25,7 @@ df.show
 df = df.select(
    df.columns.map {
      case "CRIME" => df("CRIME")
-     case "PCT" => df(other).cast(IntegerType).as(other)
+     case "PCT" => df("PCT").cast(IntegerType).as("PCT")
      case other => df(other).cast(DoubleType).as(other)
    }: _*
 )
@@ -58,6 +58,9 @@ df4 = df4.withColumn("Variance", $"Diff" / $"2017")
 df4 = df4.sort(asc("Variance"))
 df4.show
 
+var df7 = df4.withColumn("Variance_prediction", (($"2016" - $"2015") / $"2016"))
+df7 = df4.sort(asc("Variance_prediction"))
+
 // Load lookup table to map precinct with neighbourhoods
 var df5 = sqlContext.read.format("csv").option("header", "true").load("BDAD/LookupTable.csv")
 
@@ -68,10 +71,10 @@ df5 = df5.select(
      case "Precinct" => df5("Precinct").cast(IntegerType).as("PCT")
      case other => df5(other)
      }: _*
-) 
+)
 
 //Map precinct to neighbourhoods
-var df6 = df5.join(df4, Seq("PCT"))
+var df6 = df5.join(df7, Seq("PCT"))
 
 //Sort the neighbourhoods based on crime rate
 df6 = df6.sort(asc("Variance"))
