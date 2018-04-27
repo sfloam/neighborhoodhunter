@@ -96,7 +96,7 @@
                 .append( "path" )
                 .attr( "fill", function(d){
                     console.log(d)
-                    if (d.One_Family.Rank > 3 && d.One_Family.Average_Price_Lower < budget){
+                    if (d.Family_Type.One_Family.Rank > 3 && d.Family_Type.One_Family.Average_Price_Lower < budget){
                         d3.select(this)
                         .style("fill","red")
                     }
@@ -191,7 +191,7 @@
     .append( "path" )
     .attr( "fill", function(d){
         console.log(d)
-        if (d.One_Family.Rank > 0 && d.One_Family.Average_Price_Lower < budget){
+        if (d.Family_Type.One_Family.Rank > 0 && d.Family_Type.One_Family.Average_Price_Lower < budget){
             d3.select(this)
             .style("fill","red")
         }
