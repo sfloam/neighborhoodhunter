@@ -59,7 +59,7 @@ df4 = df4.sort(asc("Variance"))
 df4.show
 
 var df7 = df4.withColumn("Variance_prediction", (($"2016" - $"2015") / $"2016"))
-df7 = df4.sort(asc("Variance_prediction"))
+df7 = df7.sort(asc("Variance_prediction"))
 
 // Load lookup table to map precinct with neighbourhoods
 var df5 = sqlContext.read.format("csv").option("header", "true").load("BDAD/LookupTable.csv")
