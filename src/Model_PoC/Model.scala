@@ -17,10 +17,13 @@ crime.printSchema
 school.printSchema
 housing.printSchema
 
+//Rename the column names (specifically from "Name" to "Neighborhood") to align/join crime data with other data
 crime = crime.toDF("PCT", "Neighborhood", "Borough", "2015", "2016", "2017", "Avg","Diff","Variance")
 
 var join1 = housing.join(crime, Seq("Neighborhood"))
+// drop unnecessary columns
 join1 = join1.drop("2015", "2016", "2017", "Avg", "Diff")
+//Rename the column names to avoid confusion (eg. "variance" of Crime data to "Variance_crime")
 join1 = join1.toDF("Neighborhood", "BuildingType", "Variance_housing", "PCT", "Borough", "Variance_crime")
 join1.printSchema
 join1.show
@@ -31,24 +34,28 @@ join2 = join2.toDF("Neighborhood", "BuildingType", "Variance_housing", "PCT", "B
 join2.printSchema
 join2.show
 
+// Define the schema since all the types are string when you load
 join2 = join2.select(
    join2.columns.map {
      case "Variance_housing" => join2("Variance_housing").cast(DoubleType).as("Variance_housing")
      case "Variance_crime" => join2("Variance_crime").cast(DoubleType).as("Variance_crime")
      case "Variance_school" => join2("Variance_school").cast(DoubleType).as("Variance_school")
-     case other => join2(other)
-     }: _*
+       }: _*
 ) 
 
+// get the command line args and cast it to double 
 val args = sc.getConf.get("spark.driver.args").split("\\s+")
 val housing_weight = args(0).toDouble
 val crime_weight = args(1).toDouble
 val school_weight = args(2).toDouble
 
+// evaluate the score
 var score = join2.withColumn("Score", ($"Variance_housing" * housing_weight) + (-($"Variance_crime") * crime_weight) + ($"Variance_school" * school_weight))
+//sort the neighborhoods based on score
 score = score.sort(asc("Score"))
 score.printSchema
 score.show
 
 //Running on dumbo home folder
 //$ spark-shell -i ~/Model.scala --conf spark.driver.args="0.5 0.3 0.2"
+//$ spark-shell -i ~/Model.scala --conf spark.driver.args="0.45 0.3 0.25"
