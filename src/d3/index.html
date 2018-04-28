@@ -4,7 +4,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>NYC Neighborhood Hunter</title>
     <style>
+    body{
+        background-color: #e6f7ff;
+    }
+
     #neighborhoodPopover {
       position: absolute;
       text-align: center;
@@ -16,7 +21,24 @@
       pointer-events: none;
       opacity: 0;
     }
-
+    #titleName{
+         position: block;
+         text-align: center;
+         color:white;
+         border-style:solid;
+         border-color: #002966;
+         background-color: #00aaff;
+         font-size: 50px;
+    }
+    #createdby{
+         position: block;
+         text-align: center;
+         padding-top:50px;
+         color:black;
+         font-size: 20px;
+         font-style:oblique;
+         font-weight: bold;
+    }
     #dataTag{
       position:absolute;
       text-align: center;
@@ -35,7 +57,6 @@
 
 }
     </style>
-	<title>Mapping with D3</title>
 	<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <script src="nyc.geojson"></script>
     <script src="sd.geojson"></script>
@@ -47,6 +68,8 @@
             <input name="budget"  type="submit" value="Enter" >
             <input type="text" id="budget" placeholder="Enter Budget&hellip;">
     </form> -->
+    <h1 id="titleName">NYC Neighborhood Hunter</h1>
+    <p>
     <select id="budgetPrice" onSubmit="return handleClick()">
 		<option value="100000" selected="selected">$100000</option>
 		<option value="200000">$200000</option>
@@ -77,7 +100,6 @@
     				var budget = sect.options[sect.selectedIndex].value;
 
                 var g = svg.append( "g" );
-
                 var albersProjection = d3.geoAlbers()
                     .scale( 90500 )
                     .rotate( [71.057,0] )
@@ -96,7 +118,6 @@
                 .append( "path" )
                 .attr( "fill", function(d){
                     console.log(d)
-		    console.log(d.Family_Type)
                     if (d.One_Family.Rank > 3 && d.One_Family.Average_Price_Lower < budget){
                         d3.select(this)
                         .style("fill","red")
@@ -105,7 +126,6 @@
                         d3.select(this)
                         .style("fill","#ccc")
                     }
-
                 } )
                 .attr( "stroke", "#333")
                 .attr( "d", geoPath )
@@ -127,19 +147,10 @@
                     .style("left", (d3.event.pageX) + "px")
                     .style("top", (d3.event.pageY) + "px")
                     .text(d.properties.neighborhood + "RANK" + d.One_Family.Rank)
-
-
                 })
 
                 //removes highlights
                 .on("mouseleave", function(d) {
-                    // // if (d.properties.neighborhood="Tribeca"){
-                    // //     d3.select(this)
-                    // //     .style("stroke-width", .25)
-                    // //     .style("stroke-dasharray", 1)
-                    // //     .style("fill","r")
-                    // // }
-                    // else{
                     if (d.One_Family.Rank > 4){
                         d3.select(this)
                         .style("fill","red")
@@ -148,9 +159,6 @@
                         d3.select(this)
                         .style("fill","#ccc")
                     }
-                    // }
-
-
                     d3.select("#neighborhoodPopover")
                     .transition()
                     .style("opacity", 0)
@@ -159,6 +167,7 @@
 
 
             })
+
     console.log(budget)
     // Width and Height of the whole visualization
     var width = 960;
@@ -200,7 +209,6 @@
             d3.select(this)
             .style("fill","#ccc")
         }
-
     } )
     .attr( "stroke", "#333")
     .attr( "d", geoPath )
@@ -222,19 +230,10 @@
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY) + "px")
         .text(d.properties.neighborhood + "RANK" + d.One_Family.Rank)
-
-
     })
 
     //removes highlights
     .on("mouseleave", function(d) {
-        // // if (d.properties.neighborhood="Tribeca"){
-        // //     d3.select(this)
-        // //     .style("stroke-width", .25)
-        // //     .style("stroke-dasharray", 1)
-        // //     .style("fill","r")
-        // // }
-        // else{
         if (d.One_Family.Rank > 4){
             d3.select(this)
             .style("fill","red")
@@ -243,14 +242,10 @@
             d3.select(this)
             .style("fill","#ccc")
         }
-        // }
-
-
         d3.select("#neighborhoodPopover")
         .transition()
         .style("opacity", 0)
-    })
-    ;
+    });
 
     // var school_data = svg.append( "g" );
     // school_data.selectAll( "path" )
@@ -293,5 +288,6 @@
     //      "\n" + "Neighborhood:" + d.properties.Neighborhood)
     // });
 	</script>
+    <div id="createdby">Created by: Scott Floam, Harivadhana Ravi, & Stephanie Carrera</div>
 </body>
 </html>
