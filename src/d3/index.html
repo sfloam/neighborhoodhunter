@@ -16,66 +16,73 @@
         font: 18px sans-serif;
         font-weight: bold;
         display: inline;
-        padding-left:10px;
+        padding-left:40px;
+	top:2px;
+	position:relative;
     }
     #neighborhoodPopover {
-      position: absolute;
-      text-align: center;
-      padding: 2px;
-      font: 14px sans-serif;
-      background: #fff;
-      border: 0px;
-      border-radius: 8px;
-      pointer-events: none;
-      opacity: 0;
+	position: absolute;
+	text-align: center;
+	padding: 2px;
+	font: 14px sans-serif;
+	background: #fff;
+	border: 0px;
+	border-radius: 8px;
+	pointer-events: none;
+	opacity: 0;
     }
     #titleName{
-         position: block;
-         text-align: center;
-         color:white;
-         border-style:solid;
-         border-color: #002966;
-         background-color: #00aaff;
-         font-size: 50px;
-         border-width:10px;
-         text-shadow: -3px 0 #002966, 0 1px #002966, 1px 0 #002966, 0 -1px #002966;
+	position: block;
+	text-align: center;
+	color:white;
+	border-style:solid;
+	border-color: #002966;
+	background-color: #00aaff;
+	font-size: 50px;
+	border-width:10px;
+	text-shadow: -3px 0 #002966, 0 1px #002966, 1px 0 #002966, 0 -1px #002966;
     }
     #createdby{
-         position: block;
-         text-align: center;
-         padding-top:50px;
-         padding-left: 150px;
-         color:black;
-         font-size: 20px;
-         font-style:oblique;
-         font-weight: bold;
-         position:center;
+	position: relative;
+	display:block;
+	text-align: center;
+	padding-top:50px;
+	padding-left: 150px;
+	color:black;
+	font-size: 20px;
+	font-style:oblique;
+	font-weight: bold;
+	position:center;
     }
     #dataTag{
-      position:absolute;
-      text-align: center;
-      padding: 2px;
-      font: 12px sans-serif;
-      background: #fff;
-      border: 0px;
-      border-radius: 8px;
-      pointer-events: none;
-      opacity: 0;
+	position:absolute;
+	text-align: center;
+	padding: 2px;
+	font: 12px sans-serif;
+	background: #fff;
+	border: 0px;
+	border-radius: 8px;
+	pointer-events: none;
+	opacity: 0;
     }
     #budgetPrice{
-	position:inline-block;
-    font: 16px sans-serif;
-	top:10px;
-	left:10px;
+	position:relative;
+	font: 16px sans-serif;
+	left:5px;
+	display:inline-block;
     }
     #homeType{
-    position:inline-block;
-    font-size:16px;
-    top:10px;
-    left:10px;
+	position:relative;
+	font-size:16px;
+	left:5px;	
+	display:inline-block;
+    }
+    svg{
+	position:relative;
+	display:inline-block;
     }
     </style>
-	<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <script src="nyc.geojson"></script>
     <script src="sd.geojson"></script>
     <div id='neighborhoodPopover'> </div>
@@ -83,148 +90,143 @@
 </head>
 <body>
     <div>
-    <h1 id="titleName">NYC Neighborhood Hunter</h1>
-    <p>
-    <div id="dropdownLabel">Budget:</div>
-    <select id="budgetPrice" onSubmit="return handleClick()">
-        <option disabled selected value> -- Select Your Budget -- </option>
-        <option value="100000">$100000</option>
-		<option value="200000">$200000</option>
-		<option value="300000">$300000</option>
-        <option value="400000">$400000</option>
-		<option value="500000">$500000</option>
-        <option value="600000">$600000</option>
-        <option value="700000">$700000</option>
-        <option value="800000">$800000</option>
-        <option value="900000">$900000</option>
-        <option value="1000000">$1.0M</option>
-        <option value="1500000">$1.5M</option>
-        <option value="2000000">$2.0M</option>
-        <option value="2500000">$2.5M</option>
-        <option value="3000000">$3.0M</option>
-        <option value="3500000">$3.5M</option>
-        <option value="4000000">$4.0M</option>
-        <option value="4500000">$4.5M</option>
-        <option value="5000000">$5.0M</option>
-        <option value="5500000">$5.5M</option>
-        <option value="6000000">$6.0M</option>
-        <option value="6500000">$6.5M</option>
-        <option value="7000000">$7.0M</option>
-        <option value="7500000">$7.5M</option>
-        <option value="8000000">$8.0M</option>
-        <option value="8500000">$8.5M</option>
-        <option value="9000000">$9.0M</option>
-        <option value="9500000">$9.5M</option>
-        <option value="10000000">$10.0M</option>
-        <option value="10500000">$10.5M</option>
-        <option value="11000000">$11.0M</option>
-        <option value="11500000">$11.5M</option>
-        <option value="12000000">$12.0M</option>
-        <option value="12500000">$12.5M</option>
-        <option value="13000000">$13.0M</option>
-        <option value="13500000">$13.5M</option>
-        <option value="14000000">$14.0M</option>
-        <option value="14500000">$14.5M</option>
-        <option value="15000000">$15.0M</option>
-        <option value="15500000">$15.5M</option>
-        <option value="16000000">$16.0M</option>
-        <option value="16500000">$16.5M</option>
-        <option value="17000000">$17.0M</option>
-        <option value="17500000">$17.5M</option>
-        <option value="18000000">$18.0M</option>
-        <option value="18500000">$18.5M</option>
-    </select>
-
-    <div id="dropdownLabel">Home Type:</div>
-    <select id="homeType" onSubmit="return handleClick()">
-        <option disabled selected value> -- Select Your Home Type -- </option>
-		<option value="One_Family">One Family</option>
-		<option value="Two_Family">Two Family</option>
-		<option value="Three_Family">Three Family</option>
-        <option value="Condo_Walkup">Condo Walkup</option>
-        <option value="Condo_Elevator">Condo Elevator</option>
-        <option value="Coop_Walkup">Coop Walkup</option>
-        <option value="Coop_Elevator">Coop Elevator</option>
-    </select>
+	<h1 id="titleName">NYC Neighborhood Hunter</h1>
+	<p>
+	<div id="dropdownLabel">Budget:</div>
+	<select id="budgetPrice" onSubmit="return handleClick()">
+	    <option disabled selected value> -- Select Your Budget -- </option>
+	    <option value="100000">$100K</option>
+	    <option value="200000">$200K</option>
+	    <option value="300000">$300K</option>
+	    <option value="400000">$400K</option>
+	    <option value="500000">$500K</option>
+	    <option value="600000">$600K</option>
+	    <option value="700000">$700K</option>
+	    <option value="800000">$800K</option>
+	    <option value="900000">$900K</option>
+	    <option value="1000000">$1.0M</option>
+	    <option value="1500000">$1.5M</option>
+	    <option value="2000000">$2.0M</option>
+	    <option value="2500000">$2.5M</option>
+	    <option value="3000000">$3.0M</option>
+	    <option value="3500000">$3.5M</option>
+	    <option value="4000000">$4.0M</option>
+	    <option value="4500000">$4.5M</option>
+	    <option value="5000000">$5.0M</option>
+	    <option value="5500000">$5.5M</option>
+	    <option value="6000000">$6.0M</option>
+	    <option value="6500000">$6.5M</option>
+	    <option value="7000000">$7.0M</option>
+	    <option value="7500000">$7.5M</option>
+	    <option value="8000000">$8.0M</option>
+	    <option value="8500000">$8.5M</option>
+	    <option value="9000000">$9.0M</option>
+	    <option value="9500000">$9.5M</option>
+	    <option value="10000000">$10.0M</option>
+	    <option value="10500000">$10.5M</option>
+	    <option value="11000000">$11.0M</option>
+	    <option value="11500000">$11.5M</option>
+	    <option value="12000000">$12.0M</option>
+	    <option value="12500000">$12.5M</option>
+	    <option value="13000000">$13.0M</option>
+	    <option value="13500000">$13.5M</option>
+	    <option value="14000000">$14.0M</option>
+	    <option value="14500000">$14.5M</option>
+	    <option value="15000000">$15.0M</option>
+	    <option value="15500000">$15.5M</option>
+	    <option value="16000000">$16.0M</option>
+	    <option value="16500000">$16.5M</option>
+	    <option value="17000000">$17.0M</option>
+	    <option value="17500000">$17.5M</option>
+	    <option value="18000000">$18.0M</option>
+	    <option value="18500000">$18.5M</option>
+	</select>
+	<div id="dropdownLabel">Home Type:</div>
+	<select id="homeType" onSubmit="return handleClick()">
+	    <option disabled selected value> -- Select Your Home Type -- </option>
+	    <option value="One_Family">One Family</option>
+	    <option value="Two_Family">Two Family</option>
+	    <option value="Three_Family">Three Family</option>
+	    <option value="Condo_Walkup">Condo Walkup</option>
+	    <option value="Condo_Elevator">Condo Elevator</option>
+	    <option value="Coop_Walkup">Coop Walkup</option>
+	    <option value="Coop_Elevator">Coop Elevator</option>
+	</select>
     </div>
 
-	<!-- Page elements and content go here. -->
-	<script>
+    <script>
     var budget = 0
     var homeType = ""
     //Adapted from http://bl.ocks.org/d3noob/6bd13f974d6516f3e491
     d3.select('#budgetPrice')
-    			.on("change", function () {
-    				var sect = document.getElementById("budgetPrice");
-    				var budget = sect.options[sect.selectedIndex].value;
+	.on("change", function () {
+	    var sect = document.getElementById("budgetPrice");
+	    var budget = sect.options[sect.selectedIndex].value;
 
-                var g = svg.append( "g" );
-                var albersProjection = d3.geoAlbers()
-                    .scale( 90500 )
-                    .rotate( [71.057,0] )
-                    .center( [-3, 40.711] )
-                    .translate( [width/2,height/2] );
+	    var g = svg.append( "g" );
+	    var albersProjection = d3.geoAlbers()
+		.scale( 90500 )
+		.rotate( [71.057,0] )
+		.center( [-3, 40.711] )
+		.translate( [width/2,height/2] );
 
                 // Create GeoPath function that uses built-in D3 functionality to turn
                 // lat/lon coordinates into screen coordinates
-                var geoPath = d3.geoPath()
-                    .projection( albersProjection );
+	    var geoPath = d3.geoPath()
+		.projection( albersProjection );
 
-                //color neighborhood grey
-                g.selectAll( "path" )
-                .data( neighborhoods_json.features )
-                .enter()
-                .append( "path" )
-                .attr( "fill", function(d){
-                    console.log(d)
-                    if (d.One_Family.Rank > 3 && d.One_Family.Average_Price_Lower < budget){
-                        d3.select(this)
-                        .style("fill","red")
-                    }
-                    else{
-                        d3.select(this)
-                        .style("fill","#ccc")
-                    }
-                } )
-                .attr( "stroke", "#333")
-                .attr( "d", geoPath )
-                
-                //highlights on hover
-                .on("mouseenter", function(d) {
-                    //color neighborhood green when hover over
-                    console.log(d);
-                    d3.select(this)
-                    .style("stroke-width", 1.5)
-                    .style("stroke-dasharray", 0)
-                    .style("fill","green")
+	    //color neighborhood grey
+	    g.selectAll( "path" )
+	    .data( neighborhoods_json.features )
+	    .enter()
+	    .append( "path" )
+	    .attr( "fill", function(d){
+		console.log(d)
+		if (d.One_Family.Rank > 3 && d.One_Family.Average_Price_Lower < budget){
+		    d3.select(this)
+		    .style("fill","red")
+		}
+		else{
+		    d3.select(this)
+		    .style("fill","#ccc")
+		}
+	    })
+	    .attr( "stroke", "#333")
+	    .attr( "d", geoPath )
+	    
+	    //highlights on hover
+	    .on("mouseenter", function(d) {
+		//color neighborhood green when hover over
+		console.log(d);
+		d3.select(this)
+		.style("stroke-width", 1.5)
+		.style("stroke-dasharray", 0)
+		.style("fill","green")
 
-                    //label neighborhood on hover
-                    d3.select("#neighborhoodPopover")
-                    .transition()
-                    .style("opacity", .8)
-                    .style("left", (d3.event.pageX) + "px")
-                    .style("top", (d3.event.pageY) + "px")
-                    .text(d.properties.neighborhood + " Rank: " + ((d.One_Family.Rank!=-1)?d.One_Family.Rank:"N/A"))
-                })
+		//label neighborhood on hover
+		d3.select("#neighborhoodPopover")
+		.transition()
+		.style("opacity", .8)
+		.style("left", (d3.event.pageX) + "px")
+		.style("top", (d3.event.pageY) + "px")
+		.text(d.properties.neighborhood + " Rank: " + ((d.One_Family.Rank!=-1)?d.One_Family.Rank:"N/A"))
+	    })
 
-                //removes highlights
-                .on("mouseleave", function(d) {
-                    if (d.One_Family.Rank > 4){
-                        d3.select(this)
-                        .style("fill","red")
-                    }
-                    else{
-                        d3.select(this)
-                        .style("fill","#ccc")
-                    }
-                    d3.select("#neighborhoodPopover")
-                    .transition()
-                    .style("opacity", 0)
-                })
-                ;
-
-
-            })
+	    //removes highlights
+	    .on("mouseleave", function(d) {
+		if (d.One_Family.Rank > 4){
+		    d3.select(this)
+		    .style("fill","red")
+		}
+		else{
+		    d3.select(this)
+		    .style("fill","#ccc")
+		}
+		d3.select("#neighborhoodPopover")
+		.transition()
+		.style("opacity", 0)
+	    });
+	})
 
     console.log(budget)
     // Width and Height of the whole visualization
@@ -345,7 +347,7 @@
     //      "\n" + "Weight_2017:" + d.properties.Weight_2017+
     //      "\n" + "Neighborhood:" + d.properties.Neighborhood)
     // });
-	</script>
+    </script>
     <div id="createdby">Created by: Scott Floam, Harivadhana Ravi, & Stephanie Carrera</div>
 </body>
 </html>
