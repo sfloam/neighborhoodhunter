@@ -11,6 +11,63 @@
         background-color: #e6f7ff;
         text-align:center;
     }
+    
+    #colorbox{
+	display:inline-block;
+	position:relative;
+	width: 20px;
+	height:20px;
+	margin-right:10px;
+	margin-left:10px;
+	border-style:solid;
+	border-radius:1px;
+	top:6px;
+    }
+    #colorbox.cb1{	
+      	background:red;
+    }   
+    #colorboxlabel{
+	display:inline-block;	
+	position:relative;
+	bottom:1px;
+	font: 18px sans-serif;
+	font-weight:bold;
+	padding-left: 5px;	
+	padding-right:5px;	
+	padding-top:10px;
+	padding-bottom:10px;
+	margin-left:10px;
+    }
+    #legendcell{
+	padding:5px;
+	position:relative;
+	display:flex;
+	justify-content: flex-end;
+    }
+   
+    #legendbody{
+	margin-top:-3px;
+	border-style:solid;
+	background-color:white;
+    }
+    #legendtitle{
+	background-color:#00aaff;
+	position:relative;
+	border-style:solid;
+	padding:10px;
+    }
+    #legendtitletext{
+	font:18px sans-serif;
+	color:white;
+	font-weight:bold;
+	text-shadow: -1px 0 #002966, 0 1px #002966, 1px 0 #002966, 0 -1px #002966;
+    }
+    #legend{
+	margin-top:100px;
+	margin-left:40px;
+	display:block;
+	position:absolute;
+    }
     #dropit{
 	display: inline-block;
 	position:relative;
@@ -42,7 +99,7 @@
 	border-color: #002966;
 	background-color: #00aaff;
 	font-size: 50px;
-	border-width:10px;
+	border-width:10px;	
 	text-shadow: -3px 0 #002966, 0 1px #002966, 1px 0 #002966, 0 -1px #002966;
     }
     #createdby{
@@ -158,6 +215,17 @@
 		<option value="Coop_Walkup">Coop Walkup</option>
 		<option value="Coop_Elevator">Coop Elevator</option>
 	    </select>
+	</div>
+	<div id="legend">
+	    <div id="legendtitle">
+		<span id ="legendtitletext">Legend</span>
+	    </div>
+	    <div id="legendbody">
+		<div id="legendcell">
+		    <div id="colorboxlabel">Top 5:</div>
+		    <div id="colorbox" class="cb1"> </div> 
+		</div>
+	    </div>
 	</div>
     </div>
 
