@@ -117,7 +117,7 @@ val dfcrddschema2 = StructType(
         StructField("Variance_prediction",DoubleType,true)::Nil)
 
 val df_school = sqlContext.createDataFrame(df_school_var,dfcrddschema2)
-
+//df_school.rdd.map(line=>line.toString.replace("[","").replace("]","")).coalesce(1).saveAsTextFile("bdadFinalSchool2")
 
 // df_school.rdd.zipWithIndex.map(tup => "{\"type\":\"Feature\","+
 //     "\"id\":"+ tup._2.toString + ","+
