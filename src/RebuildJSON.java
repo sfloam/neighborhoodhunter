@@ -62,13 +62,13 @@ class Values {
 
 	public void setPrice(String family, String price) {
 		switch (family) {
-		case "Coops-Walkup":
+		case "Coop-Walkup":
 			coopsWalkup = price;
 			break;
 		case "One_Family":
 			oneFamily = price;
 			break;
-		case "Coops-Elevator":
+		case "Coop-Elevator":
 			coopsElevator = price;
 			break;
 		case "Two_Family":
@@ -77,10 +77,10 @@ class Values {
 		case "Three_Family":
 			threeFamily = price;
 			break;
-		case "Condos-Elevator":
+		case "Condo-Elevator":
 			condosElevator = price;
 			break;
-		case "Condos-Walkup":
+		case "Condo-Walkup":
 			condosWalkup = price;
 			break;
 		}
@@ -88,13 +88,13 @@ class Values {
 	
 	@Override
 	public String toString() {
-		return "\"Coops-Walkup" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + coopsWalkup + "}," +
+		return "\"Coop-Walkup" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + coopsWalkup + "}," +
 				"\"One_Family" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + oneFamily + "}," +
-				"\"Coops-Elevator" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + coopsElevator + "}," + 
+				"\"Coop-Elevator" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + coopsElevator + "}," + 
 				"\"Two_Family" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + twoFamily + "}," + 
 				"\"Three_Family" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + threeFamily + "}," + 
-				"\"Condos-Elevator" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + condosElevator + "}," + 
-				"\"Condos-Walkup" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + condosWalkup + "},";
+				"\"Condo-Elevator" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + condosElevator + "}," + 
+				"\"Condo-Walkup" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + condosWalkup + "},";
 	}
 
 }
