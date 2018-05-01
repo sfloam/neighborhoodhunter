@@ -38,7 +38,7 @@ val dfrdddone = dfcrdd.map(line => org.apache.spark.sql.Row(
         line(1),//Weight_2015
         line(2),//Weight_2016
         line(3),//Weight_2017
-        // ((line(3).toString.toDouble - ((line(1).toString.toDouble + line(2).toString.toDouble)/2))/ line(3).toString.toDouble),//var
+        ((line(3).toString.toDouble - ((line(1).toString.toDouble + line(2).toString.toDouble)/2))/ line(3).toString.toDouble),//var
         line(4),
         line(5),
         "["+line(5).toString+","+line(4).toString+"]"))
@@ -49,7 +49,7 @@ val dfcrdd1schema = StructType(
         StructField("Weight_2015",DoubleType,true)::
         StructField("Weight_2016",DoubleType,true)::
         StructField("Weight_2017",DoubleType,true)::
-        // StructField("Variance",DoubleType,true)::
+        StructField("Variance",DoubleType,true)::
         StructField("Latitude",DoubleType,true)::
         StructField("Longitude",DoubleType,true)::
         StructField("Coordinates",StringType,true)::
@@ -88,47 +88,32 @@ def getNeighborhood(latitude:Double,longitude:Double,lookups:Array[org.apache.sp
     return(minDistNeighborhood)
 }
 
-val df_school_neighs = df_school_no_neighs.rdd.map(line=> org.apache.spark.sql.Row(line(0),line(1),line(2),line(3),getNeighborhood(line(4).toString.toDouble,line(5).toString.toDouble,lookups)))
+val df_school_neighs = df_school_no_neighs.rdd.map(line=> org.apache.spark.sql.Row(line(0),line(1),line(2),line(3),line(4),line(5),line(6),line(7),getNeighborhood(line(5).toString.toDouble,line(6).toString.toDouble,lookups)))
 
 val dfcrddschema = StructType(
         StructField("DBN",StringType,true)::
         StructField("Weight_2015",DoubleType,true)::
         StructField("Weight_2016",DoubleType,true)::
         StructField("Weight_2017",DoubleType,true)::
-        // StructField("Variance",DoubleType,true)::
-        // StructField("Latitude",DoubleType,true)::
-        // StructField("Longitude",DoubleType,true)::
-        // StructField("Coordinates",StringType,true)::
+        StructField("Variance",DoubleType,true)::
+        StructField("Latitude",DoubleType,true)::
+        StructField("Longitude",DoubleType,true)::
+        StructField("Coordinates",StringType,true)::
         StructField("Neighborhood",StringType,true)::
         Nil)
 
-val df_school_novar = sqlContext.createDataFrame(df_school_neighs,dfcrddschema)
+val df_school = sqlContext.createDataFrame(df_school_neighs,dfcrddschema)
 
-val df_school_novar_agg = df_school_novar.groupBy("Neighborhood").agg(avg("Weight_2015").alias("Weight_2015"),avg("Weight_2016").alias("Weight_2016"),avg("Weight_2017").alias("Weight_2017"))
-
-val df_school_var = df_school_novar_agg.rdd.map(line=> org.apache.spark.sql.Row(line(0),line(1),line(2),line(3),((line(3).toString.toDouble - ((line(1).toString.toDouble + line(2).toString.toDouble)/2))/ line(3).toString.toDouble),((line(2).toString.toDouble - line(1).toString.toDouble)/(line(2).toString.toDouble))))
-
-val dfcrddschema2 = StructType(
-        StructField("Neighborhood",StringType,true)::
-        StructField("Weight_2015",DoubleType,true)::
-        StructField("Weight_2016",DoubleType,true)::
-        StructField("Weight_2017",DoubleType,true)::
-        StructField("Variance",DoubleType,true)::
-        StructField("Variance_prediction",DoubleType,true)::Nil)
-
-val df_school = sqlContext.createDataFrame(df_school_var,dfcrddschema2)
-//df_school.rdd.map(line=>line.toString.replace("[","").replace("]","")).coalesce(1).saveAsTextFile("bdadFinalSchool2")
-
-// df_school.rdd.zipWithIndex.map(tup => "{\"type\":\"Feature\","+
-//     "\"id\":"+ tup._2.toString + ","+
-//     "\"properties\": {"+
-//     "\"Neighborhood\":"+ "\""+tup._1(0).toString+"\""+ "," +
-//     "\"Weight_2015\":" + "\""+ tup._1(1).toString + "\"," +
-//     "\"Weight_2016\":"+ tup._1(2).toString + "," +
-//     "\"Weight_2017\":"+ tup._1(3).toString + "," +
-//     "\"Variance\":"+ tup._1(4).toString + "," +
-//     "\"Latitude\":"+ tup._1(5).toString + "," +
-//     "\"Longitude\":"+ tup._1(6).toString + "," +
-//     "\"Neighborhood\":"+ "\""+ tup._1(8).toString +"\"" + "}," +
-//     "\"geometry\": {\"type\":\"Point\", \"coordinates\":"+tup._1(7) +"}},")
+df_school.rdd.zipWithIndex.map(tup => "{\"type\":\"Feature\","+
+    "\"id\":"+ tup._2.toString + ","+
+    "\"properties\": {"+
+    "\"DBN\":"+ "\""+tup._1(0).toString+"\""+ "," +
+    "\"Weight_2015\":" + "\""+ tup._1(1).toString + "\"," +
+    "\"Weight_2016\":"+ tup._1(2).toString + "," +
+    "\"Weight_2017\":"+ tup._1(3).toString + "," +
+    "\"Variance\":"+ tup._1(4).toString + "," +
+    "\"Latitude\":"+ tup._1(5).toString + "," +
+    "\"Longitude\":"+ tup._1(6).toString + "," +
+    "\"Neighborhood\":"+ "\""+ tup._1(8).toString +"\"" + "}," +
+    "\"geometry\": {\"type\":\"Point\", \"coordinates\":"+tup._1(7) +"}},")
 
