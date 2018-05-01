@@ -1,6 +1,6 @@
 <!--Borrowed From http://bl.ocks.org/pstuffa/38111aa2e3077baa67f1d0c42df9bf08 -->
 <!-- Borrowed From http://duspviz.mit.edu/d3-workshop/mapping-data-with-d3/ -->
-
+<!-- Borrowed from http://bl.ocks.org/d3noob/6bd13f974d6516f3e491 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,7 +82,7 @@
         position: absolute;
         text-align: center;
         padding: 2px;
-        font: 14px sans-serif;
+        font: 12px sans-serif;
         background: #fff;
         border: 0px;
         border-radius: 8px;
@@ -242,43 +242,85 @@
     var count =0
     var getNeighs = function(d){
         count+=1
-        oneFamilyDict[d.One_Family.Rank] = [d]
-        twoFamilyDict[d.Two_Family.Rank] = [d]
-        threeFamilyDict[d.Three_Family.Rank] = [d]
-        condoWalkupDict[d.Condo_Walkup.Rank] = [d]
-        condoElevatorDict[d.Condo_Elevator.Rank] = [d]
-        coopWalkupDict[d.Coop_Walkup.Rank] = [d]
-        coopElevatorDict[d.Coop_Elevator.Rank] = [d]
-        // console.log(d)
-        // console.log("Get Neighs called",count,oneFamilyDict,twoFamilyDict,threeFamilyDict,condoWalkupDict,condoElevatorDict,coopWalkupDict,coopElevatorDict);
-    }
+        if (d.One_Family.Price < budget && d.One_Family.Rank !=-1){
+            oneFamilyDict[d.One_Family.Rank] = [d]
+            if (Object.keys(oneFamilyDict).length >5){
+                var keys = Object.keys(oneFamilyDict)
+                keys = keys.sort()
+                delete oneFamilyDict[keys[0]]
+            }
 
-    var getTopFive = function(hash,budget){
-        var keys = Object.keys(hash)
-        keys = keys.sort()
-        count = 0
-        var data = []
-        for (var i = keys.length-1; i >= 0; i--){
-            if (count < 5){
-                //TODO: need to incorporate price
-                if (keys[i] != "-1"){
-                    data.push(hash[keys[i]])
-                }
+        }
+
+        if (d.Two_Family.Price < budget && d.Two_Family.Rank !=-1){
+            twoFamilyDict[d.Two_Family.Rank] = [d]
+            if (Object.keys(twoFamilyDict).length >5){
+                var keys = Object.keys(twoFamilyDict)
+                keys = keys.sort()
+                delete twoFamilyDict[keys[0]]
             }
         }
-        return data
-    }
-    //Adapted from http://bl.ocks.org/d3noob/6bd13f974d6516f3e491
 
-    //BUDGET code
+        if (d.Three_Family.Price < budget && d.Three_Family.Rank !=-1){
+            threeFamilyDict[d.Three_Family.Rank] = [d]
+            if (Object.keys(threeFamilyDict).length >5){
+                var keys = Object.keys(threeFamilyDict)
+                keys = keys.sort()
+                delete threeFamilyDict[keys[0]]
+            }
+        }
+
+        if  (d.Condo_Walkup.Price < budget && d.Condo_Walkup.Rank != 1){
+            condoWalkupDict[d.Condo_Walkup.Rank] = [d]
+            if (Object.keys(condoWalkupDict).length >5){
+                var keys = Object.keys(condoWalkupDict)
+                keys = keys.sort()
+                delete condoWalkupDict[keys[0]]
+            }
+        }
+
+        if  (d.Condo_Elevator.Price < budget && d.Condo_Elevator.Rank != 1){
+            condoElevatorDict[d.Condo_Elevator.Rank] = [d]
+            if (Object.keys(condoElevatorDict).length >5){
+                var keys = Object.keys(condoElevatorDict)
+                keys = keys.sort()
+                delete condoElevatorDict[keys[0]]
+            }
+        }
+        if  (d.Coop_Walkup.Price < budget && d.Coop_Walkup.Rank != 1){
+            coopWalkupDict[d.Coop_Walkup.Rank] = [d]
+            if (Object.keys(coopWalkupDict).length >5){
+                var keys = Object.keys(coopWalkupDict)
+                keys = keys.sort()
+                delete coopWalkupDict[keys[0]]
+            }
+        }
+        if  (d.Coop_Elevator.Price < budget && d.Coop_Elevator.Rank != 1){
+            coopElevatorDict[d.Coop_Elevator.Rank] = [d]
+            if (Object.keys(coopElevatorDict).length >5){
+                var keys = Object.keys(coopElevatorDict)
+                keys = keys.sort()
+                delete coopElevatorDict[keys[0]]
+            }
+        }
+    }
+
+//BUDGET code
     d3.select('#budgetPrice')
     	.on("change", function () {
             var sect = document.getElementById("budgetPrice");
             budget = sect.options[sect.selectedIndex].value;
+            oneFamilyDict = {}
+            twoFamilyDict = {}
+            threeFamilyDict = {}
+            condoWalkupDict = {}
+            condoElevatorDict = {}
+            coopWalkupDict = {}
+            coopElevatorDict = {}
             BuildBudget()
     	})
 
-    //HOMETYPE code
+//HOMETYPE code
     d3.select('#homeType')
         .on("change", function () {
             var sect = document.getElementById("homeType");
@@ -308,8 +350,7 @@
 
     // Create GeoPath function that uses built-in D3 functionality to turn
     // lat/lon coordinates into screen coordinates
-    var geoPath = d3.geoPath()
-        .projection( albersProjection );
+    var geoPath = d3.geoPath().projection( albersProjection );
 
     //color neighborhood grey
     g.selectAll( "path" )
@@ -317,22 +358,16 @@
         .enter()
         .append( "path" )
         .attr( "fill", function(d){
-            getNeighs(d);
             try{
                 if (d.One_Family.Rank > 0 && d.One_Family.Price < budget){
-                    // console.log("Budget in Range: "+ budget)
-                    d3.select(this)
-                        .style("fill","red")
+                    d3.select(this).style("fill","red")
                 }
                 else{
-                    // console.log("Budget out of Range: "+ budget)
-                    d3.select(this)
-                        .style("fill","#ccc")
+                    d3.select(this).style("fill","#ccc")
                 }
             }
             catch(err){
-                d3.select(this)
-                    .style("fill","#ccc")
+                d3.select(this).style("fill","#ccc")
             }
         })
         .attr( "stroke", "#333")
@@ -351,36 +386,28 @@
                 .style("opacity", .8)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY) + "px")
-                .text(d.properties.neighborhood + "price:"+ d.One_Family.Price + ": Rank: " + ((d.One_Family.Rank!=-1)?d.One_Family.Rank:"N/A"))
+                .text(d.properties.neighborhood)
         })
 
-    //removes highlights
+        //removes highlights
         .on("mouseleave", function(d) {
             try{
                 if (d.One_Family.Rank > 0 && d.One_Family.Price < budget){
                     // console.log("Budget In Range: " + budget)
-                    d3.select(this)
-                        .style("fill","red")
+                    d3.select(this).style("fill","red")
                 }
                 else{
                     // console.log("Budget out of Range: "+budget)
-                    d3.select(this)
-                        .style("fill","#ccc")
+                    d3.select(this).style("fill","#ccc")
                 }
             }
             catch(err){
-                d3.select(this)
-                    .style("fill","#ccc")
+                d3.select(this).style("fill","#ccc")
             }
             d3.select("#neighborhoodPopover")
                 .transition()
                 .style("opacity", 0)
         });
-
-
-
-
-
 
     var BuildBudget = function (){
         var g = svg.append( "g" );
@@ -393,91 +420,18 @@
         // Create GeoPath function that uses built-in D3 functionality to turn
         // lat/lon coordinates into screen coordinates
         var geoPath = d3.geoPath().projection( albersProjection );
-        // console.log("budget when build called:"+budget)
-        //color neighborhood grey
+
         g.selectAll( "path" )
             .data( neighborhoods_json.features )
             .enter()
             .append( "path" )
-            .attr( "fill", function(d){
-                // console.log("HomeType in builder:"+homeType)
-                try{
-                    if (homeType == "") {
-                        d3.select(this).style("fill","#ccc")
-                    }
-                    else if (homeType == "One_Family"){
-                        var topFive = getTopFive(oneFamilyDict,budget)
-                        //TODO: Confirm that the data is in the array above to filter
-                        if (d.One_Family.Rank > -1 && d.One_Family.Price < budget){
-
-                            d3.select(this).style("fill","red")
-                        }
-                        else{
-                            d3.select(this).style("fill","#ccc")
-                        }
-                    }
-                    else if (homeType == "Two_Family"){
-                        if (d.Two_Family.Rank > -1 && d.Two_Family.Price < budget){
-                            d3.select(this).style("fill","red")
-                        }
-                        else{
-                            d3.select(this).style("fill","#ccc")
-                        }
-                    }
-                    else if (homeType == "Three_Family"){
-                        if (d.Three_Family.Rank > -1 && d.Three_Family.Price < budget){
-                            d3.select(this).style("fill","red")
-                        }
-                        else{
-                            d3.select(this).style("fill","#ccc")
-                        }
-                    }
-                    else if (homeType == "Condo_Walkup"){
-                        if (d.Condo_Walkup.Rank > -1 && d.Condo_Walkup.Price < budget){
-                            d3.select(this).style("fill","red")
-                        }
-                        else{
-                            d3.select(this).style("fill","#ccc")
-                        }
-                    }
-                    else if (homeType == "Condo_Elevator"){
-                        if (d.Condo_Elevator.Rank > -1 && d.Condo_Elevator.Price < budget){
-                            d3.select(this).style("fill","red")
-                        }
-                        else{
-                            d3.select(this).style("fill","#ccc")
-                        }
-                    }
-                    else if (homeType == "Coop_Walkup"){
-                        if (d.Coop_Walkup.Rank > -1 && d.Coop_Walkup.Price < budget){
-                            d3.select(this).style("fill","red")
-                        }
-                        else{
-                            d3.select(this).style("fill","#ccc")
-                        }
-                    }
-                    else if (homeType == "Coop_Elevator"){
-                        if (d.Coop_Elevator.Rank > -1 && d.Coop_Elevator.Price < budget){
-                            d3.select(this).style("fill","red")
-                        }
-                        else{
-                            d3.select(this).style("fill","#ccc")
-                        }
-                    }
-                    else{
-                        d3.select(this).style("fill","#ccc")
-                    }
-                }
-                catch(err){
-                    d3.select(this).style("fill","#ccc")
-                }
-           })
+            .attr("something",getNeighs)
+            .attr( "fill", fillEvent )
             .attr( "stroke", "#333")
             .attr( "d", geoPath )
 
-                //highlights on hover
+            //highlights on hover
             .on("mouseenter", function(d) {
-                //color neighborhood green when hover over
                 d3.select(this)
                     .style("stroke-width", 1.5)
                     .style("stroke-dasharray", 0)
@@ -489,129 +443,210 @@
                     .style("opacity", .8)
                     .style("left", (d3.event.pageX) + "px")
                     .style("top", (d3.event.pageY) + "px")
-                    .text(d.properties.neighborhood + "price:"+ d.One_Family.Price +": Rank: " + ((d.One_Family.Rank!=-1)?d.One_Family.Rank:"N/A"))
+                    .text(d.properties.neighborhood)
             })
-
             //removes highlights
-            .on("mouseleave", function(d) {
-            // console.log("BUDGET"+budget)
-            // console.log("HomeType"+homeType)
-            try{
-                if (homeType == "") {
-                    d3.select(this).style("fill","#ccc")
-                }
-                else if (homeType == "One_Family"){
-                    if (d.One_Family.Rank > -1 && d.One_Family.Price < budget){
-                        //TODO: match with the if statements above
-                        d3.select(this).style("fill","red")
-                    }
-                    else{
-                        d3.select(this).style("fill","#ccc")
-                    }
-                }
-                else if (homeType == "Two_Family"){
-                    if (d.Two_Family.Rank > -1 && d.Two_Family.Price < budget){
-                        d3.select(this).style("fill","red")
-                    }
-                    else{
-                        d3.select(this).style("fill","#ccc")
-                    }
-                }
-                else if (homeType == "Three_Family"){
-                    if (d.Three_Family.Rank > -1 && d.Three_Family.Price < budget){
-                        d3.select(this).style("fill","red")
-                    }
-                    else{
-                        d3.select(this).style("fill","#ccc")
-                    }
-                }
-                else if (homeType == "Condo_Walkup"){
-                    if (d.Condo_Walkup.Rank > -1 && d.Condo_Walkup.Price < budget){
-                        d3.select(this).style("fill","red")
-                    }
-                    else{
-                        d3.select(this).style("fill","#ccc")
-                    }
-                }
-                else if (homeType == "Condo_Elevator"){
-                    if (d.Condo_Elevator.Rank > -1 && d.Condo_Elevator.Price < budget){
-                        d3.select(this).style("fill","red")
-                    }
-                    else{
-                        d3.select(this).style("fill","#ccc")
-                    }
-                }
-                else if (homeType == "Coop_Walkup"){
-                    if (d.Coop_Walkup.Rank > -1 && d.Coop_Walkup.Price < budget){
-                        d3.select(this).style("fill","red")
-                    }
-                    else{
-                        d3.select(this).style("fill","#ccc")
-                    }
-                }
-                else if (homeType == "Coop_Elevator"){
-                    if (d.Coop_Elevator.Rank > -1 && d.Coop_Elevator.Price < budget){
-                        d3.select(this).style("fill","red")
-                    }
-                    else{
-                        d3.select(this).style("fill","#ccc")
-                    }
+            .on("mouseleave",fillEvent2)
+    }
+
+    function fillEvent(d){
+        // console.log("HomeType in builder:"+homeType)
+        try{
+            if (homeType == "") {
+                d3.select(this).style("fill","#ccc")
+            }
+            else if (homeType == "One_Family"){
+                if (oneFamilyDict.hasOwnProperty(d.One_Family.Rank)){
+                    d3.select(this).style("fill","red")
+                    console.log(d)
                 }
                 else{
                     d3.select(this).style("fill","#ccc")
                 }
             }
-            catch(err){
+            else if (homeType == "Two_Family"){
+                if (twoFamilyDict.hasOwnProperty(d.Two_Family.Rank)){
+                    d3.select(this).style("fill","red")
+                    console.log(d)
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Three_Family"){
+                if (threeFamilyDict.hasOwnProperty(d.Three_Family.Rank)){
+                    d3.select(this).style("fill","red")
+                    console.log(d)
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Condo_Walkup"){
+                if (condoWalkupDict.hasOwnProperty(d.Condo_Walkup.Rank)){
+                    d3.select(this).style("fill","red")
+                    console.log(d)
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Condo_Elevator"){
+                if (condoElevatorDict.hasOwnProperty(d.Condo_Elevator.Rank)){
+                    d3.select(this).style("fill","red")
+                    console.log(d)
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Coop_Walkup"){
+                if (coopWalkupDict.hasOwnProperty(d.Coop_Walkup.Rank)){
+                    d3.select(this).style("fill","red")
+                    console.log(d)
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Coop_Elevator"){
+                if (coopElevatorDict.hasOwnProperty(d.Coop_Elevator.Rank)){
+                    d3.select(this).style("fill","red")
+                    console.log(d)
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else{
                 d3.select(this).style("fill","#ccc")
             }
-            d3.select("#neighborhoodPopover")
-            .transition()
-            .style("opacity", 0)
-            })
+        }
+        catch(err){
+            d3.select(this).style("fill","#ccc")
+        }
+   }
+
+
+function fillEvent2(d) {
+    // console.log("BUDGET"+budget)
+    // console.log("HomeType"+homeType)
+    try{
+        if (homeType == "") {
+            d3.select(this).style("fill","#ccc")
+        }
+        else if (homeType == "One_Family"){
+            if (oneFamilyDict.hasOwnProperty(d.One_Family.Rank)){
+                d3.select(this).style("fill","red")
+            }
+            else{
+                d3.select(this).style("fill","#ccc")
+            }
+        }
+        else if (homeType == "Two_Family"){
+            if (twoFamilyDict.hasOwnProperty(d.Two_Family.Rank)){
+                d3.select(this).style("fill","red")
+            }
+            else{
+                d3.select(this).style("fill","#ccc")
+            }
+        }
+        else if (homeType == "Three_Family"){
+            if (threeFamilyDict.hasOwnProperty(d.Three_Family.Rank)){
+                d3.select(this).style("fill","red")
+            }
+            else{
+                d3.select(this).style("fill","#ccc")
+            }
+        }
+        else if (homeType == "Condo_Walkup"){
+            if (condoWalkupDict.hasOwnProperty(d.Condo_Walkup.Rank)){
+                d3.select(this).style("fill","red")
+            }
+            else{
+                d3.select(this).style("fill","#ccc")
+            }
+        }
+        else if (homeType == "Condo_Elevator"){
+            if (condoElevatorDict.hasOwnProperty(d.Condo_Elevator.Rank)){
+                d3.select(this).style("fill","red")
+            }
+            else{
+                d3.select(this).style("fill","#ccc")
+            }
+        }
+        else if (homeType == "Coop_Walkup"){
+            if (coopWalkupDict.hasOwnProperty(d.Coop_Walkup.Rank)){
+                d3.select(this).style("fill","red")
+            }
+            else{
+                d3.select(this).style("fill","#ccc")
+            }
+        }
+        else if (homeType == "Coop_Elevator"){
+            if (coopElevatorDict.hasOwnProperty(d.Coop_Elevator.Rank)){
+                d3.select(this).style("fill","red")
+            }
+            else{
+                d3.select(this).style("fill","#ccc")
+            }
+        }
+        else{
+            d3.select(this).style("fill","#ccc")
+        }
+    }
+    catch(err){
+        d3.select(this).style("fill","#ccc")
+    }
+    d3.select("#neighborhoodPopover")
+    .transition()
+    .style("opacity", 0)
     }
 
-
-    // var school_data = svg.append( "g" );
-    // school_data.selectAll( "path" )
-    // 	.data(school_data_json.features)
-    // 	.enter()
-    // 	.append( "path" )
-    // 	.attr( "fill", "#900" )
-    // 	.attr( "stroke", "#999" )
-    // 	.attr( "d", geoPath )
-	//     .on("mouseover", function(d) {
-    //          //recolor when wave mouse over points that have variance less than zero
-    //          if(d.properties.Variance <0){
-    //              d3.select(this)
-    //              .attr("fill","#3FCCFF")
-    //              // if (d.properties.DBN == "29Q1945"){
-    //              //     g.select("path").style("fill","red")
-    //              // }
-    //          }
-	// })
-    // //when you move your mouse away from label of point, label disappears
-    // .on("mouseleave",function(d){
-    //     d3.select("#dataTag")
-    //       .transition()
-    //       .style("opacity", 0)
-    //     d3.select(this)
-    //         .attr("fill","#900")
-    //         .attr( "stroke", "#999" )
-    //     // console.log(d3.select("path"))
-    // })
-    // .on("click",function(d){
-    //     //give name tag to points
-    //     d3.select("#dataTag")
-    //       .transition()
-    //       .style("opacity", .8)
-    //       .style("left", (d3.event.pageX) + "px")
-    //       .style("top", (d3.event.pageY) + "px")
-    //       .text("DBN:" + d.properties.DBN +
-    //      "\n" + "Variance:" + d.properties.Variance +
-    //      "\n" + "Weight_2017:" + d.properties.Weight_2017+
-    //      "\n" + "Neighborhood:" + d.properties.Neighborhood)
-    // });
     </script>
     <div id="createdBy">Created by: Scott Floam, Harivadhana Ravi, & Stephanie Carrera</div>
 </body>
 </html>
+
+<!-- Scrap Code
+// var school_data = svg.append( "g" );
+// school_data.selectAll( "path" )
+// 	.data(school_data_json.features)
+// 	.enter()
+// 	.append( "path" )
+// 	.attr( "fill", "#900" )
+// 	.attr( "stroke", "#999" )
+// 	.attr( "d", geoPath )
+//     .on("mouseover", function(d) {
+//          //recolor when wave mouse over points that have variance less than zero
+//          if(d.properties.Variance <0){
+//              d3.select(this)
+//              .attr("fill","#3FCCFF")
+//              // if (d.properties.DBN == "29Q1945"){
+//              //     g.select("path").style("fill","red")
+//              // }
+//          }
+// })
+// //when you move your mouse away from label of point, label disappears
+// .on("mouseleave",function(d){
+//     d3.select("#dataTag")
+//       .transition()
+//       .style("opacity", 0)
+//     d3.select(this)
+//         .attr("fill","#900")
+//         .attr( "stroke", "#999" )
+//     // console.log(d3.select("path"))
+// })
+// .on("click",function(d){
+//     //give name tag to points
+//     d3.select("#dataTag")
+//       .transition()
+//       .style("opacity", .8)
+//       .style("left", (d3.event.pageX) + "px")
+//       .style("top", (d3.event.pageY) + "px")
+//       .text("DBN:" + d.properties.DBN +
+//      "\n" + "Variance:" + d.properties.Variance +
+//      "\n" + "Weight_2017:" + d.properties.Weight_2017+
+//      "\n" + "Neighborhood:" + d.properties.Neighborhood)
+// });
+-->
