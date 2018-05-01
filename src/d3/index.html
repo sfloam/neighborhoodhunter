@@ -270,7 +270,7 @@
             }
         }
 
-        if  (d.Condo_Walkup.Price < budget && d.Condo_Walkup.Rank != 1){
+        if  (d.Condo_Walkup.Price < budget && d.Condo_Walkup.Rank != -1){
             condoWalkupDict[d.Condo_Walkup.Rank] = [d]
             if (Object.keys(condoWalkupDict).length >5){
                 var keys = Object.keys(condoWalkupDict)
@@ -279,7 +279,7 @@
             }
         }
 
-        if  (d.Condo_Elevator.Price < budget && d.Condo_Elevator.Rank != 1){
+        if  (d.Condo_Elevator.Price < budget && d.Condo_Elevator.Rank != -1){
             condoElevatorDict[d.Condo_Elevator.Rank] = [d]
             if (Object.keys(condoElevatorDict).length >5){
                 var keys = Object.keys(condoElevatorDict)
@@ -287,7 +287,7 @@
                 delete condoElevatorDict[keys[0]]
             }
         }
-        if  (d.Coop_Walkup.Price < budget && d.Coop_Walkup.Rank != 1){
+        if  (d.Coop_Walkup.Price < budget && d.Coop_Walkup.Rank != -1){
             coopWalkupDict[d.Coop_Walkup.Rank] = [d]
             if (Object.keys(coopWalkupDict).length >5){
                 var keys = Object.keys(coopWalkupDict)
@@ -295,7 +295,7 @@
                 delete coopWalkupDict[keys[0]]
             }
         }
-        if  (d.Coop_Elevator.Price < budget && d.Coop_Elevator.Rank != 1){
+        if  (d.Coop_Elevator.Price < budget && d.Coop_Elevator.Rank != -1){
             coopElevatorDict[d.Coop_Elevator.Rank] = [d]
             if (Object.keys(coopElevatorDict).length >5){
                 var keys = Object.keys(coopElevatorDict)
