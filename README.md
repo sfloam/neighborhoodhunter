@@ -61,6 +61,12 @@ These last five folders for "borough"_sales_prices each contain seperate files o
 spark-shell --packages com.databricks:spark-csv_2.10:1.5.0 
 ```
 
+##To Convert Model Result to D3 Compatible GeoJSON
+##### Run the RebuildJSON.java with two input files 
+- model result: resources/model/Output_H.0.35_C.0.4_S.0.25.csv )
+- NYC GeoJSON: resources/nyc.geojson
+- Result: resources/model/JsonBuilderResult.json
+
 ## To view map of data follow these steps:
 1. In your command line:
 - A. python -m SimpleHTTPServer
