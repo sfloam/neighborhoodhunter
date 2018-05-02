@@ -1,4 +1,12 @@
-//author: sc2936@nyu.edu
+//author: sc2936@nyu.edu, hr1106@nyu.edu
+// Program joins data from all 3 data sources : Housing, Crime, and School
+// The model works by combining variance scores from each data source and assigning a weight to each.
+// The neighbohoods with the highest scores show the greatest change in housing price increase, crime decresae, and school quality increase.
+// The applicable neighborhoods with the highest rank are then surfaced in the UI for the user and filtered by user input for budget and building type.
+
+// This program contains 2 outputs
+// 1) The input which must be used the geo json builder class in order to generate the UI.
+// 2) review of model goodness, which was run for various differnt weights (hard coded below). Best weights listed.
 
 //spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
 
