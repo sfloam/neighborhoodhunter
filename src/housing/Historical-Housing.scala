@@ -1,4 +1,7 @@
 //author: sc2936@nyu.edu
+//This program creates summaries for NYC housing sales from 2005 - 2017 
+//The output only contains data from 2015 - 2017 for consistency across all 3 data sets
+//The output of this program must be used as input to model
 
     //spark-shell --packages com.databricks:spark-csv_2.10:1.5.0 
 
