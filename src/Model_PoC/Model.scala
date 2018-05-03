@@ -1,4 +1,3 @@
-//author: sc2936@nyu.edu, hr1106@nyu.edu
 // Program joins data from all 3 data sources : Housing, Crime, and School
 // The model works by combining variance scores from each data source and assigning a weight to each.
 // The neighbohoods with the highest scores show the greatest change in housing price increase, crime decresae, and school quality increase.
