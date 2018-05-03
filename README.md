@@ -58,26 +58,17 @@ These last five folders for "borough"_sales_prices each contain seperate files o
 
 ##### C. Enter into command line
 ```module load spark
-spark-shell --packages com.databricks:spark-csv_2.10:1.5.0 
+spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
 ```
 
 ## To view map of data follow these steps:
 1. In your command line:
 - A. python -m SimpleHTTPServer
-- B. open index
+- B. open index.html or go to 0.0.0.0:8000
 
 ## To interact with the map:
 1. Hover over a neighborhood to view the name of that neighborhood
-2. Click on a datapoint to view information about that data point
-- A. Currently the map is set up to display school locations in NYC. This will be converted into data relating to our model.
-- B. If variance is greater than zero, the color of the dot will stay red. If variance is less than zero, the color of the dot will turn blue when you hover over it.
-- C. This demonstration is meant to show a mock up of the functionality we plan to implement in our application
-
-## Recent Updates
-1. School Data now accounts for variance and generates GPS locations of each school
-2. Crime data is updated with variance and sorted based on variance values
-3. School Data now can generate geojson code used for plotting information
-- A. This code will be repurposed later for our model code
-
-
-
+2. Select your budget and home type
+- A. The red areas reveal the top five neighborhoods that are about to pop with respect to your budget and home needs (some budget ranges will reveal fewer than five)
+- B. These areas will update as you change your budget and home type
+- C. If you would like to see the data relating to the top five ranks, view the console log.
