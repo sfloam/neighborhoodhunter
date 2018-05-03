@@ -34,6 +34,12 @@ var housing = sqlContext.read.format("csv").option("header", "true").load("housi
 var school = sqlContext.read.format("csv").option("header", "true").load("housingSalesClean/NYC_School_Data.csv")
 var recentPrice = sqlContext.read.format("csv").option("header", "true").load("housingSalesClean/summary_2017_2018_5.2.2018")
 
+//set weights for each parameter
+val housing_weight = .35
+val crime_weight = .4
+val school_weight = .25
+val minRank = 0
+val maxRank = 99
 
 housing = housing.select(
   $"NEIGHBORHOOD",
@@ -103,12 +109,6 @@ val join2Double = join2.selectExpr(
     "cast(Variance_prediction_school as Double) Variance_prediction_school",
     "cast(Variance_test_housing as Double) Variance_test_housing")
 
-     
-//set weights for each parameter
-val housing_weight = .35
-val crime_weight = .4
-val school_weight = .25
-
 
 // evaluate the score
 val scoreDF = join2Double.withColumn("score", 
@@ -120,8 +120,8 @@ val (scoreMin, scoreMax) = scoreDF.agg(min($"score"), max($"score")).first match
   case Row(x: Double, y: Double) => (x, y)
 }
 
-val scaledRange = lit(99) 
-val scaledMin = lit(0)  
+val scaledRange = lit(maxRank) 
+val scaledMin = lit(minRank)  
 val normalized = ($"score" - scoreMin) / (scoreMax - scoreMin)
 val scaled = scaledRange * normalized + scaledMin
 val rankDF = scoreDF.withColumn("rank", scaled).sort(desc("rank"))
@@ -138,8 +138,8 @@ val (scoreMinP, scoreMaxP) = scorePrediction.agg(min($"score_prediction"), max($
   case Row(x: Double, y: Double) => (x, y)
 }
 
-val scaledRangeP = lit(100) 
-val scaledMinP = lit(0)  
+val scaledRangeP = lit(maxRank) 
+val scaledMinP = lit(minRank)  
 val normalizedP = ($"score_prediction" - scoreMinP) / (scoreMaxP - scoreMinP)
 val scaledP = scaledRangeP * normalizedP + scaledMinP
 val rankPrediction = scorePrediction.withColumn("rank_predicted", scaledP).sort(desc("rank"))
@@ -155,8 +155,8 @@ val rankPrediction = scorePrediction.withColumn("rank_predicted", scaledP).sort(
 val (scoreMinT, scoreMaxT) = rankPrediction.agg(min($"Variance_test_housing"), max($"Variance_test_housing")).first match {
   case Row(x: Double, y: Double) => (x, y)
 }
-val scaledRangeT = lit(100)
-val scaledMinT = lit(0)  
+val scaledRangeT = lit(maxRank)
+val scaledMinT = lit(minRank)  
 val normalizedT = ($"Variance_test_housing" - scoreMinT) / (scoreMaxT - scoreMinT)
 val scaledT = scaledRangeT * normalizedT + scaledMinT
 val rankTesting = rankPrediction.withColumn("rank_testing", scaledT)
