@@ -41,6 +41,33 @@ val school_weight = .25
 val minRank = 0
 val maxRank = 99
 
+
+//other iterations tested
+// Housing: .45 Crime: .3 School: .25
+// Housing: .0.05 Crime: .0.05 School: .0.9
+// Housing: .0.05 Crime: .0.9 School: .0.05
+// Housing: .0.1 Crime: .0.1 School: .0.8
+// Housing: .0.1 Crime: .0.2 School: .0.7
+// Housing: .0.1 Crime: .0.6 School: .0.3
+// Housing: .0.1 Crime: .0.7 School: .0.2
+// Housing: .0.1 Crime: .0.8 School: .0.1
+// Housing: .0.25 Crime: .0.45 School: .0.3
+// Housing: .0.2 Crime: .0.2 School: .0.6
+// Housing: .0.2 Crime: .0.3 School: .0.5
+// Housing: .0.2 Crime: .0.4 School: .0.4
+// Housing: .0.2 Crime: .0.5 School: .0.3
+// Housing: .0.2 Crime: .0.7 School: .0.1
+// Housing: .0.3333 Crime: .0.3333 School: .0.3333
+// Housing: .0.34 Crime: .0.33 School: .0.33
+// Housing: .0.35 Crime: .0.4 School: .0.25
+// Housing: .0.3 Crime: .0.45 School: .0.25
+// Housing: .0.3 Crime: .0.6 School: .0.1
+// Housing: .0.45 Crime: .0.3 School: .0.25
+// Housing: .0.4 Crime: .0.2 School: .0.4
+// Housing: .0.4 Crime: .0.45 School: .0.15
+// Housing: .0.4 Crime: .0.5 School: .0.1
+// Housing: .0.8 Crime: .0.1 School: .0.1
+
 housing = housing.select(
   $"NEIGHBORHOOD",
   $"BOROUGH",
