@@ -198,7 +198,7 @@ val output = replaceRankPrice.select(
 
 
 //create strings for generated files
-val count = 3
+val count = 4
 val fileName = "/user/sc2936/housingSalesClean/Goodness_H." + housing_weight +"_C." + crime_weight + "_S." + school_weight + "_" + count
 val outputName = "/user/sc2936/housingSalesClean/Output_H." + housing_weight +"_C." + crime_weight + "_S." + school_weight + "_" + count
 
