@@ -32,7 +32,7 @@ val sqlContext = new SQLContext(sc)
 var crime = sqlContext.read.format("csv").option("header", "true").load("housingSalesClean/CrimeWithPrediction.csv")
 var housing = sqlContext.read.format("csv").option("header", "true").load("housingSalesClean/historical_all_buildingType_5.1.18")
 var school = sqlContext.read.format("csv").option("header", "true").load("housingSalesClean/NYC_School_Data.csv")
-var recentPrice = sqlContext.read.format("csv").option("header", "true").load("housingSalesClean/summary_2017_2018_5.1.2018")
+var recentPrice = sqlContext.read.format("csv").option("header", "true").load("housingSalesClean/summary_2017_2018_5.2.2018")
 
 
 housing = housing.select(
