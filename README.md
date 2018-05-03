@@ -61,6 +61,7 @@ These last five folders for "borough"_sales_prices each contain seperate files o
 ##### B.2 Modify HDFS paths in src/housing/Historical-Housing.scala
 
   Recent-And-2017-Sales
+  
   You must run Recent-And-2017-Sales.scala first as it will generate the input file
   "housingSalesClean/new2017_5.1.18" for Historical-Housing.scala
     
@@ -68,6 +69,7 @@ These last five folders for "borough"_sales_prices each contain seperate files o
    which is an input of recent sale prices for the model
   
   Historical-Housing.scala
+  
   Historical-Housing.scala will generate one of the input files for the model 
   "housingSalesClean/historical_all_buildingType_5.1.18"
   
