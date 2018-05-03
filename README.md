@@ -93,7 +93,7 @@ spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
 :load Model.scala
 ```
 ## To Convert Model Result to D3 Compatible GeoJSON
-##### Run the RebuildJSON.java with two input files 
+##### A. Run the RebuildJSON.java with two input files 
 - model result: resources/model/Output_H.0.35_C.0.4_S.0.25.csv )
 - NYC GeoJSON: resources/nyc.geojson
 - Result: resources/model/JsonBuilderResult.json
