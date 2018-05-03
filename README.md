@@ -73,7 +73,7 @@ enter prorgams
 ##### A. Load output Crime, School, and Housing data from above into HDFS
 output files can be found at:
 - resources/housing/historical_all_buildingType_5.1.18.csv
-- resources/housing/summary_2017_2018_5.1.2018
+- resources/housing/summary_2017_2018_5.2.2018
 - resources/crime/CrimeWithPrediction.csv
 - resources/school/Final_Output/NYC_School_Data.csv
 
