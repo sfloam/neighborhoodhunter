@@ -40,6 +40,10 @@ spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
 ```
 ## To Generate Housing Data in Spark:
 ##### A. Load housing data into HDFS
+  
+  All files are in resources/housing/rawData
+  
+  or from HDFS
 - /user/sc2936/housingSalesRaw/rollingsales_bronx.csv
 - /user/sc2936/housingSalesRaw/rollingsales_brooklyn.csv
 - /user/sc2936/housingSalesRaw/rollingsales_manhattan.csv
@@ -53,13 +57,20 @@ These last five folders for "borough"_sales_prices each contain seperate files o
 - /user/sc2936/housingSalesRaw/queens_sales_prices
 - /user/sc2936/housingSalesRaw/staten_island_sales_prices
 
-##### B. Modify HDFS paths in src/housing/Recent-And-2017-Sales.scala
-##### B. Modify HDFS paths in src/housing/Historical-Housing.scala
+##### B.1 Modify HDFS paths in src/housing/Recent-And-2017-Sales.scala
+##### B.2 Modify HDFS paths in src/housing/Historical-Housing.scala
 
+  You must run Recent-And-2017-Sales.scala first as it will generate the input file
+  "housingSalesClean/new2017_5.1.18" for Historical-Housing.scala
+  
+  Historical-Housing.scala will generate one of the input files for the model 
+  "housingSalesClean/historical_all_buildingType_5.1.18"
+  
 ##### C. Enter into command line
 ```module load spark
 spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
 ```
+enter prorgams
 
 ##To Convert Model Result to D3 Compatible GeoJSON
 ##### Run the RebuildJSON.java with two input files 
