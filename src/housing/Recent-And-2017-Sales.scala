@@ -1,4 +1,3 @@
-//author: sc2936@nyu.edu
 //This program creates summaries for 2017 and recent NYC housing sales from raw data.
 //The output of this program must be used as input to the Historical-Housing class, 
 //which formats housing data from all years which will be included in the model

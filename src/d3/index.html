@@ -154,7 +154,6 @@
 	    <div id="dropdownLabel">Budget:</div>
 	    <select id="budgetPrice" onSubmit="return handleClick()">
 		<option disabled selected value> -- Select Your Budget -- </option>
-		<option value="100000">$100K</option>
 		<option value="200000">$200K</option>
 		<option value="300000">$300K</option>
 		<option value="400000">$400K</option>
@@ -528,80 +527,80 @@
    }
 
 
-function fillEvent2(d) {
-    // console.log("BUDGET"+budget)
-    // console.log("HomeType"+homeType)
-    try{
-        if (homeType == "") {
+    function fillEvent2(d) {
+        // console.log("BUDGET"+budget)
+        // console.log("HomeType"+homeType)
+        try{
+            if (homeType == "") {
+                d3.select(this).style("fill","#ccc")
+            }
+            else if (homeType == "One_Family"){
+                if (oneFamilyDict.hasOwnProperty(d.One_Family.Rank)){
+                    d3.select(this).style("fill","red")
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Two_Family"){
+                if (twoFamilyDict.hasOwnProperty(d.Two_Family.Rank)){
+                    d3.select(this).style("fill","red")
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Three_Family"){
+                if (threeFamilyDict.hasOwnProperty(d.Three_Family.Rank)){
+                    d3.select(this).style("fill","red")
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Condo_Walkup"){
+                if (condoWalkupDict.hasOwnProperty(d.Condo_Walkup.Rank)){
+                    d3.select(this).style("fill","red")
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Condo_Elevator"){
+                if (condoElevatorDict.hasOwnProperty(d.Condo_Elevator.Rank)){
+                    d3.select(this).style("fill","red")
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Coop_Walkup"){
+                if (coopWalkupDict.hasOwnProperty(d.Coop_Walkup.Rank)){
+                    d3.select(this).style("fill","red")
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else if (homeType == "Coop_Elevator"){
+                if (coopElevatorDict.hasOwnProperty(d.Coop_Elevator.Rank)){
+                    d3.select(this).style("fill","red")
+                }
+                else{
+                    d3.select(this).style("fill","#ccc")
+                }
+            }
+            else{
+                d3.select(this).style("fill","#ccc")
+            }
+        }
+        catch(err){
             d3.select(this).style("fill","#ccc")
         }
-        else if (homeType == "One_Family"){
-            if (oneFamilyDict.hasOwnProperty(d.One_Family.Rank)){
-                d3.select(this).style("fill","red")
-            }
-            else{
-                d3.select(this).style("fill","#ccc")
-            }
+        d3.select("#neighborhoodPopover")
+        .transition()
+        .style("opacity", 0)
         }
-        else if (homeType == "Two_Family"){
-            if (twoFamilyDict.hasOwnProperty(d.Two_Family.Rank)){
-                d3.select(this).style("fill","red")
-            }
-            else{
-                d3.select(this).style("fill","#ccc")
-            }
-        }
-        else if (homeType == "Three_Family"){
-            if (threeFamilyDict.hasOwnProperty(d.Three_Family.Rank)){
-                d3.select(this).style("fill","red")
-            }
-            else{
-                d3.select(this).style("fill","#ccc")
-            }
-        }
-        else if (homeType == "Condo_Walkup"){
-            if (condoWalkupDict.hasOwnProperty(d.Condo_Walkup.Rank)){
-                d3.select(this).style("fill","red")
-            }
-            else{
-                d3.select(this).style("fill","#ccc")
-            }
-        }
-        else if (homeType == "Condo_Elevator"){
-            if (condoElevatorDict.hasOwnProperty(d.Condo_Elevator.Rank)){
-                d3.select(this).style("fill","red")
-            }
-            else{
-                d3.select(this).style("fill","#ccc")
-            }
-        }
-        else if (homeType == "Coop_Walkup"){
-            if (coopWalkupDict.hasOwnProperty(d.Coop_Walkup.Rank)){
-                d3.select(this).style("fill","red")
-            }
-            else{
-                d3.select(this).style("fill","#ccc")
-            }
-        }
-        else if (homeType == "Coop_Elevator"){
-            if (coopElevatorDict.hasOwnProperty(d.Coop_Elevator.Rank)){
-                d3.select(this).style("fill","red")
-            }
-            else{
-                d3.select(this).style("fill","#ccc")
-            }
-        }
-        else{
-            d3.select(this).style("fill","#ccc")
-        }
-    }
-    catch(err){
-        d3.select(this).style("fill","#ccc")
-    }
-    d3.select("#neighborhoodPopover")
-    .transition()
-    .style("opacity", 0)
-    }
 
     </script>
     <div id="createdBy">Created by: Scott Floam, Harivadhana Ravi, & Stephanie Carrera</div>
