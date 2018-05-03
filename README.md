@@ -60,11 +60,16 @@ These last five folders for "borough"_sales_prices each contain seperate files o
 ##### B.1 Modify HDFS paths in src/housing/Recent-And-2017-Sales.scala
 ##### B.2 Modify HDFS paths in src/housing/Historical-Housing.scala
 
-  You must run Recent-And-2017-Sales.scala first as it will generate the input file
-  "housingSalesClean/new2017_5.1.18" for Historical-Housing.scala
+  Recent-And-2017-Sales
+      You must run Recent-And-2017-Sales.scala first as it will generate the input file
+      "housingSalesClean/new2017_5.1.18" for Historical-Housing.scala
+    
+      It will also generate "summary_2017_2018_5.1.2018" 
+      which is an input of recent sale prices for the model
   
-  Historical-Housing.scala will generate one of the input files for the model 
-  "housingSalesClean/historical_all_buildingType_5.1.18"
+  Historical-Housing.scala
+      Historical-Housing.scala will generate one of the input files for the model 
+      "housingSalesClean/historical_all_buildingType_5.1.18"
   
 ##### C. Enter into command line
 ```module load spark
@@ -72,7 +77,24 @@ spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
 ```
 enter prorgams
 
-##To Convert Model Result to D3 Compatible GeoJSON
+## To Run the model in Spark:
+##### A. Load output Crime, School, and Housing data from above into HDFS
+output files can be found at:
+- resources/housing/historical_all_buildingType_5.1.18.csv
+- resources/housing/summary_2017_2018_5.1.2018
+- resources/crime/CrimeWithPrediction.csv
+- resources/school/Final_Output/NYC_School_Data.csv
+
+##### B. Modify HDFS paths in src/Model_PoC/Model.scala
+    The output of the model will generate the input for the geo json builder -> resources/model/Output_H.0.35_C.0.4_S.0.25.csv
+    
+    The weights for the model are hard coded within the file and changed for each iteration.
+    The best wieghts are currently in use:
+    val housing_weight = .35
+    val crime_weight = .4
+    val school_weight = .25
+
+## To Convert Model Result to D3 Compatible GeoJSON
 ##### Run the RebuildJSON.java with two input files 
 - model result: resources/model/Output_H.0.35_C.0.4_S.0.25.csv )
 - NYC GeoJSON: resources/nyc.geojson
