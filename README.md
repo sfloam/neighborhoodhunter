@@ -66,8 +66,9 @@ These last five folders for "borough"_sales_prices each contain seperate files o
 ##### C. Enter into command line
 ```module load spark
 spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
+:load Recent-And-2017-Sales.scala
+:load Historical-Housing.scala
 ```
-enter prorgams
 
 ## To Run the model in Spark:
 ##### A. Load output Crime, School, and Housing data from above into HDFS
@@ -85,6 +86,11 @@ output files can be found at:
     val housing_weight = .35
     val crime_weight = .4
     val school_weight = .25
+    
+##### C. Enter into command line
+```module load spark
+spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
+:load Model.scala
 
 ## To Convert Model Result to D3 Compatible GeoJSON
 ##### Run the RebuildJSON.java with two input files 
