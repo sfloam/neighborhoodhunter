@@ -61,17 +61,11 @@ These last five folders for "borough"_sales_prices each contain seperate files o
 ##### B.2 Modify HDFS paths in src/housing/Historical-Housing.scala
 
   Recent-And-2017-Sales
-  
-  You must run Recent-And-2017-Sales.scala first as it will generate the input file
-  "housingSalesClean/new2017_5.1.18" for Historical-Housing.scala
-    
-   It will also generate "summary_2017_2018_5.1.2018" 
-   which is an input of recent sale prices for the model
+  - You must run Recent-And-2017-Sales.scala first as it will generate the input file "housingSalesClean/new2017_5.1.18" for Historical-Housing.scala
+  - It will also generate "summary_2017_2018_5.1.2018", which is an input of recent sale prices for the model
   
   Historical-Housing.scala
-  
-  Historical-Housing.scala will generate one of the input files for the model 
-  "housingSalesClean/historical_all_buildingType_5.1.18"
+  - Historical-Housing.scala will generate one of the input files for the model "housingSalesClean/historical_all_buildingType_5.1.18"
   
 ##### C. Enter into command line
 ```module load spark
