@@ -79,13 +79,15 @@ output files can be found at:
 - resources/school/Final_Output/NYC_School_Data.csv
 
 ##### B. Modify HDFS paths in src/Model_PoC/Model.scala
-    The output of the model will generate the input for the geo json builder -> resources/model/Output_H.0.35_C.0.4_S.0.25.csv
+    The output of the model will generate the input for the geo json builder -> resources/model/Output_H.0.35_C.0.4_S.0.25_6.csv
     
     The weights for the model are hard coded within the file and changed for each iteration.
     The best wieghts are currently in use:
     val housing_weight = .35
     val crime_weight = .4
     val school_weight = .25
+    
+  The model will also output a file to manually review goodness -> resources/model/Goodness_H.0.35_C.0.4_S.0.25_6.csv
     
 ##### C. Enter into command line
 ```module load spark
@@ -94,7 +96,7 @@ spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
 ```
 ## To Convert Model Result to D3 Compatible GeoJSON
 ##### A. Run the RebuildJSON.java with two input files 
-- model result: resources/model/Output_H.0.35_C.0.4_S.0.25.csv )
+- model result: resources/model/Output_H.0.35_C.0.4_S.0.25_6.csv 
 - NYC GeoJSON: resources/nyc.geojson
 - Result: resources/model/JsonBuilderResult.json
 
