@@ -154,12 +154,12 @@
         orderBy($"BOROUGH", $"NEIGHBORHOOD", $"BUILDING_CLASS_CATEGORY")
 
 
-    groupedDF.coalesce(1).write.option("header", "true").format("csv").save("/user/sc2936/housingSalesClean/summary_2017_2018_5.1.2018")
+    groupedDF.coalesce(1).write.option("header", "true").format("csv").save("/user/sc2936/housingSalesClean/summary_2017_2018_5.2.2018")
     groupedDF.schema
 
 
     //test re-reading the data and that column names are the same
-    val testRead = sqlContext.read.format("csv").option("header", "true").load("housingSalesClean/summary_2017_2018_5.1.2018")
+    val testRead = sqlContext.read.format("csv").option("header", "true").load("housingSalesClean/summary_2017_2018_5.2.2018")
     testRead.limit(5).show
     testRead.count == groupedDF.count
 
