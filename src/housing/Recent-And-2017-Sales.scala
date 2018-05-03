@@ -210,7 +210,7 @@ calc2017cols.coalesce(1).write.option("header", "true").format("csv").save("/use
     $"SALE_YEAR", 
     $"BOROUGH")
 
- calcRecentcols.coalesce(1).write.option("header", "true").format("csv").save("/user/sc2936/housingSalesClean/new2017_5.1.2018")
+ calcRecentcols.coalesce(1).write.option("header", "true").format("csv").save("/user/sc2936/housingSalesClean/new2017_5.1.18")
 
 
 
