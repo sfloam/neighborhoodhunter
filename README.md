@@ -43,7 +43,7 @@ spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
   
   All files are in resources/housing/rawData
   
-  or from HDFS
+  or from Dumbo
 - /user/sc2936/housingSalesRaw/rollingsales_bronx.csv
 - /user/sc2936/housingSalesRaw/rollingsales_brooklyn.csv
 - /user/sc2936/housingSalesRaw/rollingsales_manhattan.csv
