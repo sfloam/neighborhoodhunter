@@ -13,8 +13,9 @@ public class RebuildJSON {
 
 	public static void main(String[] args) throws Exception {
 		Map<String, Values> fromCSV = new HashMap<>();
+		Map<String, Integer> uniqueNeighborhoods = new HashMap<>();
 		BufferedReader br = new BufferedReader(
-				new FileReader(new File("C:/Hari/BDAD/JSON/Output_W_H.45_C.3_S.25.csv")));
+				new FileReader(new File("C:/Hari/BDAD/JSON/New.csv")));
 		br.readLine();
 		String line;
 		while ((line = br.readLine()) != null) {
@@ -26,6 +27,7 @@ public class RebuildJSON {
 			fromCSV.put(words[0], values);
 		}
 		br.close();
+		System.out.println();
 
 		String json = "";
 		br = new BufferedReader(new FileReader(new File("C:/Hari/BDAD/JSON/nyc.geojson")));
@@ -41,6 +43,7 @@ public class RebuildJSON {
 			result += "{\"type\": \"Feature\",";
 			Values values = fromCSV.get(feature.get("properties").get("neighborhood").asText());
 			if(values == null) {
+				uniqueNeighborhoods.put(feature.get("properties").get("neighborhood").asText(), 0);
 				values = new Values();
 			}
 			result += values;
@@ -48,9 +51,12 @@ public class RebuildJSON {
 			result += "\"geometry\":" + feature.get("geometry") + "},";
 		}
 		result = result.substring(0, result.length() - 1) + "]}";
-		BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:/Hari/BDAD/JSON/result.json")));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:/Hari/BDAD/JSON/result_4.json")));
 		bw.write(result);
 		bw.close();
+		for(Map.Entry<String, Integer> entry : uniqueNeighborhoods.entrySet()) {
+			System.out.println(entry.getKey());
+		}
 		System.out.println("!!!");
 	}
 }
@@ -62,13 +68,13 @@ class Values {
 
 	public void setPrice(String family, String price) {
 		switch (family) {
-		case "Coop-Walkup":
+		case "Coop_Walkup":
 			coopsWalkup = price;
 			break;
 		case "One_Family":
 			oneFamily = price;
 			break;
-		case "Coop-Elevator":
+		case "Coop_Elevator":
 			coopsElevator = price;
 			break;
 		case "Two_Family":
@@ -77,10 +83,10 @@ class Values {
 		case "Three_Family":
 			threeFamily = price;
 			break;
-		case "Condo-Elevator":
+		case "Condo_Elevator":
 			condosElevator = price;
 			break;
-		case "Condo-Walkup":
+		case "Condo_Walkup":
 			condosWalkup = price;
 			break;
 		}
@@ -88,13 +94,13 @@ class Values {
 	
 	@Override
 	public String toString() {
-		return "\"Coop-Walkup" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + coopsWalkup + "}," +
+		return "\"Coop_Walkup" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + coopsWalkup + "}," +
 				"\"One_Family" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + oneFamily + "}," +
-				"\"Coop-Elevator" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + coopsElevator + "}," + 
+				"\"Coop_Elevator" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + coopsElevator + "}," + 
 				"\"Two_Family" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + twoFamily + "}," + 
 				"\"Three_Family" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + threeFamily + "}," + 
-				"\"Condo-Elevator" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + condosElevator + "}," + 
-				"\"Condo-Walkup" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + condosWalkup + "},";
+				"\"Condo_Elevator" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + condosElevator + "}," + 
+				"\"Condo_Walkup" + "\":{\"Rank\":" + rank + ",\"Score\":" + score + ",\"Price\":" + condosWalkup + "},";
 	}
 
 }
