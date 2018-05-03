@@ -100,12 +100,12 @@ spark-shell --packages com.databricks:spark-csv_2.10:1.5.0
 
 ## To view map of data follow these steps:
 1. In your command line:
-- A. python -m SimpleHTTPServer
-- B. open index.html or go to 0.0.0.0:8000
+- python -m SimpleHTTPServer
+- open index.html or go to 0.0.0.0:8000
 
 ## To interact with the map:
 1. Hover over a neighborhood to view the name of that neighborhood
 2. Select your budget and home type
-- A. The red areas reveal the top five neighborhoods that are about to pop with respect to your budget and home needs (some budget ranges will reveal fewer than five)
-- B. These areas will update as you change your budget and home type
-- C. If you would like to see the data relating to the top five ranks, view the console log.
+- The red areas reveal the top five neighborhoods that are about to pop with respect to your budget and home needs (some budget ranges will reveal fewer than five)
+- These areas will update as you change your budget and home type
+- If you would like to see the data relating to the top five ranks, view the console log.
