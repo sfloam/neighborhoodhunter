@@ -120,7 +120,7 @@ val (scoreMin, scoreMax) = scoreDF.agg(min($"score"), max($"score")).first match
   case Row(x: Double, y: Double) => (x, y)
 }
 
-val scaledRange = lit(100) 
+val scaledRange = lit(99) 
 val scaledMin = lit(0)  
 val normalized = ($"score" - scoreMin) / (scoreMax - scoreMin)
 val scaled = scaledRange * normalized + scaledMin
@@ -200,7 +200,7 @@ val output = replaceRankPrice.select(
 //create strings for generated files
 val count = 2
 val fileName = "/user/sc2936/housingSalesClean/Goodness_H." + housing_weight +"_C." + crime_weight + "_S." + school_weight + "_" + count
-val outputName = "/user/sc2936/housingSalesClean/Output_H." + housing_weight +"_C." + crime_weight + "_S." + school_weight
+val outputName = "/user/sc2936/housingSalesClean/Output_H." + housing_weight +"_C." + crime_weight + "_S." + school_weight + "_" + count
 
 //file contains all of the goodness measure
 replaceRankPrice.coalesce(1).write.option("header", "true").format("csv").save(fileName)
